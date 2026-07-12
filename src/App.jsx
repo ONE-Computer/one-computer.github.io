@@ -18,6 +18,7 @@ import {
   Github,
   GitFork,
   LockKeyhole,
+  Monitor,
   Network,
   ScanLine,
   Server,
@@ -31,8 +32,18 @@ const CLOUD = "https://onecomputer-openvtc.eastus2.cloudapp.azure.com";
 
 const productSteps = [
   {
+    id: "workspace",
+    eyebrow: "01 · Work",
+    title: "Give teams a real Claude workspace in the cloud.",
+    body: "A browser-accessible computer with Claude Desktop and Claude Code already available—ready for work, isolated from the rest of the enterprise.",
+    image: "/screenshots/claude-desktop-sandbox.png",
+    alt: "Remote Ubuntu cloud workspace with Claude Desktop and Claude Code Terminal available",
+    kind: "workspace",
+    icon: Monitor,
+  },
+  {
     id: "control",
-    eyebrow: "01 · Control",
+    eyebrow: "02 · Control",
     title: "See every computer and agent from one live control plane.",
     body: "Security teams get an org-wide view of running sandboxes, active agents, errors, and enforcement state—without entering the agent workspace.",
     image: "/screenshots/ciso-console.png",
@@ -42,7 +53,7 @@ const productSteps = [
   },
   {
     id: "policy",
-    eyebrow: "02 · Govern",
+    eyebrow: "03 · Govern",
     title: "Set the company floor before an agent connects.",
     body: "Default policy and scoped rules decide which traffic is allowed, denied, or sent to human review. Teams can add stricter controls, never weaker ones.",
     image: "/screenshots/default-policy.png",
@@ -52,7 +63,7 @@ const productSteps = [
   },
   {
     id: "approve",
-    eyebrow: "03 · Verify",
+    eyebrow: "04 · Verify",
     title: "Keep the approval key outside ONEComputer.",
     body: "Risky actions pause at the gateway. ONEComputer shows the hold, while the signed decision comes from a separate OpenVTC wallet and can be released only once.",
     image: "/screenshots/approvals.png",
@@ -154,6 +165,13 @@ function ProductCapture({ step, hero = false }) {
       </div>
       <div className="capture-viewport">
         <img src={step.image} alt={step.alt} loading={hero ? "eager" : "lazy"} />
+        {step.kind === "workspace" && (
+          <div className="workspace-badges" aria-hidden="true">
+            <span><Monitor size={13} /> Claude Desktop</span>
+            <span><Cpu size={13} /> Claude Code</span>
+            <span className="workspace-badge-live"><i /> Isolated sandbox</span>
+          </div>
+        )}
         <div className="capture-redactions" aria-hidden="true">
           {step.kind === "ciso" && (
             <>
@@ -239,7 +257,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            The governed computer for <span>AI agents.</span>
+            Secure cloud workspaces for <span>Claude.</span>
           </motion.h1>
           <motion.p
             className="hero-lede"
@@ -247,9 +265,9 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.38, duration: 0.7 }}
           >
-            Give Claude and other agents a real workspace—then enforce company
-            policy, hold consequential actions, and verify approval through a
-            separate OpenVTC wallet.
+            Give every team a private computer for Claude. ONEComputer brings
+            cloud sandboxes, company policy, and human-governed approvals into
+            one open control plane—so security can enable AI work at speed.
           </motion.p>
           <motion.div
             className="hero-actions"
@@ -263,7 +281,7 @@ function Hero() {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              See the product <ArrowDown size={15} />
+              See the enterprise flow <ArrowDown size={15} />
             </motion.a>
             <motion.a
               className="button button-quiet"
@@ -293,7 +311,7 @@ function Hero() {
           >
             <ShieldCheck size={17} />
             <span>
-              Policy posture <b>enforced</b>
+              Workspace <b>isolated</b>
             </span>
           </motion.div>
           <motion.div
@@ -303,17 +321,17 @@ function Hero() {
           >
             <WalletCards size={17} />
             <span>
-              Approval authority <b>external</b>
+              Company policy <b>connected</b>
             </span>
           </motion.div>
         </motion.div>
       </div>
 
       <div className="shell trust-strip" aria-label="ONEComputer capabilities">
-        <span><Server size={15} /> Isolated computers</span>
+        <span><Server size={15} /> Cloud workspaces</span>
         <span><ShieldCheck size={15} /> Policy gateway</span>
-        <span><WalletCards size={15} /> External wallet</span>
-        <span><FileCheck2 size={15} /> Durable evidence</span>
+        <span><WalletCards size={15} /> External approval</span>
+        <span><FileCheck2 size={15} /> Audit evidence</span>
       </div>
     </section>
   );
@@ -400,12 +418,54 @@ function ProductTour() {
               animate={{ opacity: 1, y: 0 }}
             >
               <span><span className="live-dot" /> Captured from the deployed cloud build</span>
-              <a href={`${CLOUD}/${activeStep.id === "control" ? "console" : activeStep.id === "policy" ? "settings/policy" : "approvals"}`} target="_blank" rel="noreferrer">
+              <a href={`${CLOUD}/${activeStep.id === "workspace" || activeStep.id === "control" ? "console" : activeStep.id === "policy" ? "settings/policy" : "approvals"}`} target="_blank" rel="noreferrer">
                 Open surface <ArrowUpRight size={13} />
               </a>
             </motion.div>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function EnterpriseStory() {
+  return (
+    <section className="section enterprise-section">
+      <div className="shell enterprise-grid">
+        <Reveal className="workspace-frame">
+          <div className="workspace-frame-top">
+            <span className="capture-dots" aria-hidden="true"><i /><i /><i /></span>
+            <span>cloud.onecomputer.dev / sandbox / claude</span>
+            <span className="workspace-state"><i /> Running</span>
+          </div>
+          <div className="workspace-frame-image">
+            <img src="/screenshots/claude-desktop-sandbox.png" alt="ONEComputer cloud sandbox desktop with Claude Desktop and Claude Code Terminal" loading="lazy" />
+            <div className="workspace-callout workspace-callout-one"><Monitor size={14} /> Claude Desktop</div>
+            <div className="workspace-callout workspace-callout-two"><Cpu size={14} /> Claude Code</div>
+            <div className="workspace-inset">
+              <img src="/screenshots/claude-desktop-welcome.png" alt="Claude Desktop running inside the ONEComputer sandbox" loading="lazy" />
+              <span><Monitor size={12} /> Claude Desktop · governed gateway</span>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="enterprise-copy" delay={0.12}>
+          <p className="eyebrow">The enterprise path to agentic work</p>
+          <h2>Give people Claude. Give security a boundary.</h2>
+          <p>
+            A chat window is not an operating model. ONEComputer gives every
+            team a controlled computer where Claude can work with files,
+            tools, and context—while the company keeps the controls that make
+            adoption responsible.
+          </p>
+          <div className="enterprise-points">
+            <div><span><Server size={16} /></span><p><b>Provision in minutes</b><small>Spin up an isolated workspace from the control plane.</small></p></div>
+            <div><span><ShieldCheck size={16} /></span><p><b>Enforce the company floor</b><small>Apply identity, network, data, and action policy before work begins.</small></p></div>
+            <div><span><FileCheck2 size={16} /></span><p><b>Leave an evidence trail</b><small>Connect holds, approvals, releases, and runtime activity.</small></p></div>
+          </div>
+          <a className="inline-link" href="#security">See how the boundary works <ArrowRight size={14} /></a>
+        </Reveal>
       </div>
     </section>
   );
@@ -417,10 +477,11 @@ function SecurityFlow() {
       <div className="shell">
         <Reveal className="section-intro narrow">
           <p className="eyebrow">Security by separation</p>
-          <h2>The browser can request approval. It cannot manufacture it.</h2>
+          <h2>Let the agent move fast. Keep authority outside the app.</h2>
           <p>
-            ONEComputer owns the business workflow. OpenVTC owns identity,
-            wallet custody, Trust Tasks, and the signed decision.
+            ONEComputer owns the business workflow and runtime boundary.
+            OpenVTC owns identity, wallet custody, Trust Tasks, and the signed
+            decision. That separation is the feature.
           </p>
         </Reveal>
 
@@ -462,7 +523,7 @@ function SecurityFlow() {
             <span className="boundary-icon"><Cpu size={20} /></span>
             <p className="eyebrow">ONEComputer control plane</p>
             <h3>Run the work.</h3>
-            <p>Users, company policy, computers, agents, connectors, gateway holds, and correlated audit state.</p>
+            <p>Users, company policy, cloud computers, agents, connectors, gateway holds, and correlated audit state.</p>
             <ul>
               <li><Check size={14} /> Business workflow</li>
               <li><Check size={14} /> Runtime enforcement</li>
@@ -493,13 +554,14 @@ function OpenSource() {
         <div className="open-heading">
           <Reveal>
             <p className="eyebrow">Open source by design</p>
-            <h2>Thin product layer. Open trust infrastructure.</h2>
+            <h2>Enterprise control. Open foundations.</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p>
               ONEComputer is forked from ONECli and evolves as the business
-              application over OpenVTC. Upstream ancestry remains visible and
-              every trust boundary stays independently auditable.
+              application over OpenVTC. The stack stays open at the trust
+              boundary, while teams get a practical control plane for running
+              Claude securely in their own cloud.
             </p>
             <a className="inline-link" href={GITHUB} target="_blank" rel="noreferrer">
               Explore the organization <ArrowUpRight size={14} />
@@ -551,7 +613,7 @@ function FinalCta() {
         />
         <div>
           <p className="eyebrow">Build the governed path</p>
-          <h2>Give agents computers.<br />Keep authority human.</h2>
+          <h2>Give teams Claude.<br />Keep the boundary human.</h2>
         </div>
         <div className="cta-actions">
           <motion.a className="button button-brand" href={GITHUB} target="_blank" rel="noreferrer" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
@@ -576,6 +638,7 @@ export default function App() {
       <main>
         <Hero />
         <ProductTour />
+        <EnterpriseStory />
         <SecurityFlow />
         <OpenSource />
         <FinalCta />
