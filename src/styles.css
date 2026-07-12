@@ -287,9 +287,9 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(560px, 1.22fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(500px, 1.1fr);
   align-items: center;
-  gap: 70px;
+  gap: 54px;
 }
 
 .hero-copy {
@@ -331,8 +331,39 @@ button:focus-visible {
   letter-spacing: -0.082em;
 }
 
-.hero h1 span {
-  color: var(--brand);
+.hero-headline-static {
+  display: block;
+}
+
+.hero-agent-line {
+  display: flex;
+  min-height: 0.92em;
+  align-items: baseline;
+  gap: 0.16em;
+  white-space: nowrap;
+}
+
+.hero-headline-for {
+  flex: 0 0 auto;
+}
+
+.hero-agent-stage {
+  position: relative;
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+  min-height: 1.06em;
+  color: var(--agent-accent, var(--brand));
+  font-size: 0.5em;
+  line-height: 1.06;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+}
+
+.hero-agent-stage .agent-rotator {
+  display: block;
+  width: 100%;
+  min-width: 0;
 }
 
 .agent-rotator {
@@ -345,6 +376,9 @@ button:focus-visible {
 }
 
 .agent-rotator > span {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: inline-block;
 }
 
@@ -371,6 +405,71 @@ button:focus-visible {
 .hero-product {
   position: relative;
   perspective: 1000px;
+}
+
+.hero-agent-dock {
+  position: absolute;
+  z-index: 7;
+  right: 0;
+  bottom: -61px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: rgba(24, 23, 22, 0.92);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.hero-agent-dock-label {
+  padding: 0 7px;
+  color: #74706a;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.hero-agent-dock button {
+  display: flex;
+  width: 39px;
+  min-width: 39px;
+  min-height: 39px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  color: #8d8983;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.hero-agent-dock button:hover,
+.hero-agent-dock button.is-active {
+  color: #f0efec;
+  border-color: color-mix(in srgb, var(--agent-accent) 44%, transparent);
+  background: color-mix(in srgb, var(--agent-accent) 10%, transparent);
+}
+
+.hero-agent-dock button > span {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #171614;
+  border-radius: 6px;
+  background: var(--agent-accent);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 760;
+}
+
+.hero-agent-dock small {
+  display: none;
 }
 
 .capture {
@@ -480,7 +579,7 @@ button:focus-visible {
 
 .workspace-badges {
   position: absolute;
-  z-index: 2;
+  z-index: 5;
   top: 16px;
   right: 16px;
   display: flex;
@@ -512,6 +611,10 @@ button:focus-visible {
   color: var(--brand);
 }
 
+.capture[style] .workspace-badges svg {
+  color: var(--agent-accent);
+}
+
 .workspace-badges .workspace-badge-live {
   color: #b7e9c6;
   border-color: rgba(25, 186, 93, 0.34);
@@ -524,6 +627,139 @@ button:focus-visible {
   border-radius: 50%;
   background: var(--brand-bright);
   box-shadow: 0 0 10px rgba(25, 186, 93, 0.7);
+}
+
+.agent-runtime-layer {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+
+.agent-visual-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 68%, color-mix(in srgb, var(--agent-accent) 19%, transparent), transparent 43%),
+    linear-gradient(118deg, transparent 35%, color-mix(in srgb, var(--agent-accent) 7%, transparent));
+  mix-blend-mode: screen;
+}
+
+.agent-runtime-card {
+  position: absolute;
+  z-index: 4;
+  right: 4.5%;
+  bottom: 11%;
+  width: min(52%, 310px);
+  padding: 13px;
+  color: #eceae6;
+  border: 1px solid color-mix(in srgb, var(--agent-accent) 47%, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  background: rgba(20, 19, 18, 0.91);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.42), 0 0 40px color-mix(in srgb, var(--agent-accent) 10%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.agent-runtime-top {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 9px;
+}
+
+.agent-runtime-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #171614;
+  border-radius: 8px;
+  background: var(--agent-accent);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.76rem;
+  font-weight: 780;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--agent-accent) 24%, transparent);
+}
+
+.agent-runtime-title {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.agent-runtime-title small {
+  margin-bottom: 2px;
+  color: #77736e;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.agent-runtime-title strong {
+  overflow: hidden;
+  font-size: 0.8rem;
+  font-weight: 620;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agent-runtime-ready {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #aaa6a0;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.48rem;
+  text-transform: uppercase;
+}
+
+.agent-runtime-ready i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--agent-accent);
+  box-shadow: 0 0 10px var(--agent-accent);
+}
+
+.agent-runtime-command {
+  display: flex;
+  margin: 11px 0 10px;
+  padding: 9px 10px;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.27);
+  font-family: "Geist Mono", ui-monospace, monospace;
+}
+
+.agent-runtime-command small {
+  margin-bottom: 5px;
+  color: #66625e;
+  font-size: 0.47rem;
+}
+
+.agent-runtime-command code {
+  color: var(--agent-accent);
+  font-size: 0.63rem;
+}
+
+.agent-runtime-foot {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #8e8983;
+  font-size: 0.5rem;
+}
+
+.agent-runtime-foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.agent-runtime-foot svg {
+  color: var(--agent-accent);
 }
 
 .capture-redactions {
@@ -801,6 +1037,11 @@ button:focus-visible {
 
 .agent-command-name .agent-rotator {
   min-width: 5.5ch;
+  text-align: center;
+}
+
+.agent-command-name .agent-rotator > span {
+  width: 100%;
   text-align: center;
 }
 
@@ -2057,6 +2298,10 @@ button:focus-visible {
     font-size: clamp(3.4rem, 16vw, 5.3rem);
   }
 
+  .hero-agent-stage {
+    font-size: 0.46em;
+  }
+
   .hero-lede {
     font-size: 1rem;
   }
@@ -2079,6 +2324,44 @@ button:focus-visible {
 
   .hero-product {
     width: 100%;
+  }
+
+  .hero-agent-dock {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 9px;
+  }
+
+  .hero-agent-dock-label {
+    display: none;
+  }
+
+  .hero-agent-dock button {
+    min-width: 0;
+    justify-content: center;
+    padding-inline: 5px;
+  }
+
+  .hero-agent-dock small,
+  .hero-agent-dock button.is-active small,
+  .hero-agent-dock button:hover small {
+    display: none;
+  }
+
+  .agent-runtime-card {
+    right: 3%;
+    bottom: 8%;
+    width: 64%;
+    padding: 10px;
+  }
+
+  .agent-runtime-command {
+    margin-block: 8px;
+    padding: 7px 8px;
   }
 
   .workspace-badges {

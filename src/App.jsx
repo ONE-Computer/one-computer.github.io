@@ -32,11 +32,11 @@ const CLOUD = "https://onecomputer-openvtc.eastus2.cloudapp.azure.com";
 const DOCS = "/docs/";
 
 const agentOptions = [
-  { id: "claude", name: "Claude", kind: "Desktop · Code", href: "https://claude.com/download" },
-  { id: "nanoclaw", name: "NanoClaw", kind: "Container-native", href: "https://github.com/qwibitai/nanoclaw" },
-  { id: "openclaw", name: "OpenClaw", kind: "Open agent platform", href: "https://github.com/openclaw/openclaw" },
-  { id: "codex", name: "Codex", kind: "Coding agent", href: "https://openai.com/codex/" },
-  { id: "hermes", name: "Hermes Agent", kind: "Open · extensible", href: "https://github.com/NousResearch/hermes-agent" },
+  { id: "claude", name: "Claude", mark: "C", kind: "Desktop · Code", command: "claude", badges: ["Claude Desktop", "Claude Code"], accent: "#d9946d", href: "https://claude.com/download" },
+  { id: "nanoclaw", name: "NanoClaw", mark: "N", kind: "Container-native", command: "nanoclaw", badges: ["NanoClaw runtime", "Container-native"], accent: "#d3b75e", href: "https://github.com/qwibitai/nanoclaw" },
+  { id: "openclaw", name: "OpenClaw", mark: "O", kind: "Open agent platform", command: "openclaw gateway", badges: ["OpenClaw gateway", "Channel bridge"], accent: "#c976e4", href: "https://github.com/openclaw/openclaw" },
+  { id: "codex", name: "Codex", mark: "X", kind: "Coding agent", command: "codex", badges: ["Codex workspace", "Terminal agent"], accent: "#8bd8b0", href: "https://openai.com/codex/" },
+  { id: "hermes", name: "Hermes Agent", mark: "H", kind: "Open · extensible", command: "hermes", badges: ["Hermes Agent", "Tool runtime"], accent: "#8fb6ed", href: "https://github.com/NousResearch/hermes-agent" },
 ];
 
 const productSteps = [
@@ -126,35 +126,47 @@ const reveal = {
   }),
 };
 
-function AgentRotator({ compact = false }) {
+function useAgentCycle(interval = 4200, paused = false) {
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    if (reduceMotion) return undefined;
+    if (reduceMotion || paused) return undefined;
     const timer = window.setInterval(
       () => setActive((current) => (current + 1) % agentOptions.length),
-      2700,
+      interval,
     );
     return () => window.clearInterval(timer);
-  }, [reduceMotion]);
+  }, [active, interval, paused, reduceMotion]);
 
-  const agent = agentOptions[active];
+  return { active, setActive, agent: agentOptions[active] };
+}
+
+function AgentName({ agent, compact = false }) {
+  const reduceMotion = useReducedMotion();
 
   return (
     <span className={`agent-rotator ${compact ? "agent-rotator-compact" : ""}`} aria-live="polite">
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false}>
         <motion.span
           key={agent.id}
-          initial={{ opacity: 0, y: 14, filter: "blur(8px)" }}
+          initial={{ opacity: 0, y: 12, filter: "blur(7px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -14, filter: "blur(8px)" }}
-          transition={{ duration: reduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, y: -12, filter: "blur(7px)" }}
+          transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
         >
           {agent.name}
         </motion.span>
       </AnimatePresence>
     </span>
+  );
+}
+
+function AgentRotator({ compact = false }) {
+  const { agent } = useAgentCycle(3200);
+
+  return (
+    <AgentName agent={agent} compact={compact} />
   );
 }
 
@@ -184,10 +196,13 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-function ProductCapture({ step, hero = false }) {
+function ProductCapture({ step, hero = false, agent = null }) {
+  const workspaceBadges = agent?.badges || ["Claude Desktop", "Claude Code"];
+
   return (
     <motion.div
       className={`capture capture-${step.kind} ${hero ? "capture-hero" : ""}`}
+      style={agent ? { "--agent-accent": agent.accent } : undefined}
       initial={{ opacity: 0, scale: 0.975, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.985, y: -12 }}
@@ -207,11 +222,53 @@ function ProductCapture({ step, hero = false }) {
       <div className="capture-viewport">
         <img src={step.image} alt={step.alt} loading={hero ? "eager" : "lazy"} />
         {step.kind === "workspace" && (
-          <div className="workspace-badges" aria-hidden="true">
-            <span><Monitor size={13} /> Claude Desktop</span>
-            <span><Cpu size={13} /> Claude Code</span>
-            <span className="workspace-badge-live"><i /> Isolated sandbox</span>
-          </div>
+          <AnimatePresence initial={false}>
+            <motion.div
+              className="workspace-badges"
+              key={agent?.id || "claude"}
+              aria-hidden="true"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.32 }}
+            >
+              <span><Monitor size={13} /> {workspaceBadges[0]}</span>
+              <span><Cpu size={13} /> {workspaceBadges[1]}</span>
+              <span className="workspace-badge-live"><i /> Isolated sandbox</span>
+            </motion.div>
+          </AnimatePresence>
+        )}
+        {hero && agent && (
+          <AnimatePresence initial={false}>
+            <motion.div
+              className="agent-runtime-layer"
+              key={agent.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.38 }}
+            >
+              <div className="agent-visual-tint" />
+              <motion.div
+                className="agent-runtime-card"
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="agent-runtime-top">
+                  <span className="agent-runtime-mark">{agent.mark}</span>
+                  <span className="agent-runtime-title"><small>Connected agent</small><strong>{agent.name}</strong></span>
+                  <span className="agent-runtime-ready"><i /> Ready</span>
+                </div>
+                <div className="agent-runtime-command"><small>$ onecomputer agent attach</small><code>{agent.command}</code></div>
+                <div className="agent-runtime-foot">
+                  <span><ShieldCheck size={12} /> Policy-bound</span>
+                  <span><LockKeyhole size={12} /> Isolated</span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
         )}
         <div className="capture-redactions" aria-hidden="true">
           {step.kind === "ciso" && (
@@ -276,6 +333,8 @@ function Nav({ progress, page = "home" }) {
 
 function Hero() {
   const heroRef = useRef(null);
+  const [rotationPaused, setRotationPaused] = useState(false);
+  const { active: activeAgentIndex, setActive: setActiveAgentIndex, agent: activeAgent } = useAgentCycle(4400, rotationPaused);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -303,7 +362,11 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            A safe computer for <span><AgentRotator /></span>
+            <span className="hero-headline-static">A safe computer</span>
+            <span className="hero-agent-line">
+              <span className="hero-headline-for">for</span>
+              <span className="hero-agent-stage" style={{ "--agent-accent": activeAgent.accent }}><AgentName agent={activeAgent} /></span>
+            </span>
           </motion.h1>
           <motion.p
             className="hero-lede"
@@ -343,12 +406,16 @@ function Hero() {
 
         <motion.div
           className="hero-product"
+          onMouseEnter={() => setRotationPaused(true)}
+          onMouseLeave={() => setRotationPaused(false)}
+          onFocusCapture={() => setRotationPaused(true)}
+          onBlurCapture={() => setRotationPaused(false)}
           style={{ y: visualY, scale: visualScale }}
           initial={{ opacity: 0, y: 45, rotateX: 6 }}
           animate={{ opacity: 1, y: 0, rotateX: 0 }}
           transition={{ delay: 0.35, duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <ProductCapture step={productSteps[0]} hero />
+          <ProductCapture step={productSteps[0]} hero agent={activeAgent} />
           <motion.div
             className="floating-proof proof-policy"
             animate={{ y: [0, -7, 0] }}
@@ -369,6 +436,26 @@ function Hero() {
               Company policy <b>connected</b>
             </span>
           </motion.div>
+          <div className="hero-agent-dock" aria-label="Choose an agent runtime">
+            <span className="hero-agent-dock-label">Runtime</span>
+            {agentOptions.map((agent, index) => (
+              <motion.button
+                type="button"
+                key={agent.id}
+                className={index === activeAgentIndex ? "is-active" : ""}
+                style={{ "--agent-accent": agent.accent }}
+                aria-label={`Show ${agent.name} workspace`}
+                aria-pressed={index === activeAgentIndex}
+                title={agent.name}
+                onClick={() => setActiveAgentIndex(index)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.94 }}
+              >
+                <span>{agent.mark}</span>
+                <small>{agent.name}</small>
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
       </div>
 
