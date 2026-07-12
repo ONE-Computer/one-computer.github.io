@@ -31,6 +31,14 @@ const GITHUB = "https://github.com/ONE-Computer/onecomputer";
 const CLOUD = "https://onecomputer-openvtc.eastus2.cloudapp.azure.com";
 const DOCS = "/docs/";
 
+const agentOptions = [
+  { id: "claude", name: "Claude", kind: "Desktop · Code", href: "https://claude.com/download" },
+  { id: "nanoclaw", name: "NanoClaw", kind: "Container-native", href: "https://github.com/qwibitai/nanoclaw" },
+  { id: "openclaw", name: "OpenClaw", kind: "Open agent platform", href: "https://github.com/openclaw/openclaw" },
+  { id: "codex", name: "Codex", kind: "Coding agent", href: "https://openai.com/codex/" },
+  { id: "hermes", name: "Hermes Agent", kind: "Open · extensible", href: "https://github.com/NousResearch/hermes-agent" },
+];
+
 const productSteps = [
   {
     id: "workspace",
@@ -97,7 +105,7 @@ const repositories = [
     label: "Protocol docs",
     name: "OpenVTC wiki",
     text: "The open trust architecture behind the ONEComputer integration.",
-    href: "https://github.com/ONE-Computer/wiki",
+    href: "https://github.com/OpenVTC/wiki",
   },
 ];
 
@@ -117,6 +125,38 @@ const reveal = {
     transition: { delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   }),
 };
+
+function AgentRotator({ compact = false }) {
+  const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+    const timer = window.setInterval(
+      () => setActive((current) => (current + 1) % agentOptions.length),
+      2700,
+    );
+    return () => window.clearInterval(timer);
+  }, [reduceMotion]);
+
+  const agent = agentOptions[active];
+
+  return (
+    <span className={`agent-rotator ${compact ? "agent-rotator-compact" : ""}`} aria-live="polite">
+      <AnimatePresence initial={false} mode="wait">
+        <motion.span
+          key={agent.id}
+          initial={{ opacity: 0, y: 14, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -14, filter: "blur(8px)" }}
+          transition={{ duration: reduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {agent.name}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 function Logo() {
   return (
@@ -196,7 +236,9 @@ function ProductCapture({ step, hero = false }) {
   );
 }
 
-function Nav({ progress }) {
+function Nav({ progress, page = "home" }) {
+  const homeAnchor = (id) => page === "home" ? `#${id}` : `/#${id}`;
+
   return (
     <motion.header
       className="site-nav"
@@ -206,14 +248,16 @@ function Nav({ progress }) {
     >
       <motion.div className="page-progress" style={{ scaleX: progress }} />
       <nav className="shell nav-inner" aria-label="Primary navigation">
-        <a href="#top" aria-label="ONEComputer home">
+        <a href={page === "home" ? "#top" : "/"} aria-label="ONEComputer home">
           <Logo />
         </a>
         <div className="nav-links">
-          <a href="#product">Product</a>
-          <a href="#security">Security</a>
+          <a href={homeAnchor("product")}>Product</a>
+          <a href={homeAnchor("agents")}>Agents</a>
+          <a href="/openvtc/">OpenVTC</a>
+          <a href={homeAnchor("security")}>Security</a>
           <a href={DOCS}>Docs</a>
-          <a href="#open-source">Open source</a>
+          <a href="/open-source/">Open source</a>
         </div>
         <motion.a
           className="button button-quiet nav-cta"
@@ -259,7 +303,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            Secure cloud workspaces for <span>Claude.</span>
+            A safe computer for <span><AgentRotator /></span>
           </motion.h1>
           <motion.p
             className="hero-lede"
@@ -267,9 +311,10 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.38, duration: 0.7 }}
           >
-            Give every team a private computer for Claude. ONEComputer brings
-            cloud sandboxes, company policy, and human-governed approvals into
-            one open control plane—so security can enable AI work at speed.
+            Give your enterprise one governed cloud runtime for the agent stack
+            your teams choose. ONEComputer combines isolated workspaces,
+            company policy, and human-governed approvals—without forcing one
+            agent vendor on the business.
           </motion.p>
           <motion.div
             className="hero-actions"
@@ -283,7 +328,7 @@ function Hero() {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              See the enterprise flow <ArrowDown size={15} />
+              See the six-part story <ArrowDown size={15} />
             </motion.a>
             <motion.a
               className="button button-quiet"
@@ -328,7 +373,7 @@ function Hero() {
       </div>
 
       <div className="shell trust-strip" aria-label="ONEComputer capabilities">
-        <span><Server size={15} /> Cloud workspaces</span>
+        <span><Server size={15} /> Agent workspaces</span>
         <span><ShieldCheck size={15} /> Policy gateway</span>
         <span><WalletCards size={15} /> External approval</span>
         <span><FileCheck2 size={15} /> Audit evidence</span>
@@ -357,10 +402,11 @@ function ProductTour() {
       <div className="shell">
         <Reveal className="section-intro">
           <p className="eyebrow">Real product · deployed on Azure</p>
-          <h2>One system from policy to proof.</h2>
+          <h2>One control plane for every agent surface.</h2>
           <p>
-            These are live ONEComputer product surfaces—not concept art. Raw
-            test identifiers are redacted in the marketing presentation.
+            These are live ONEComputer product surfaces—not concept art. The
+            screenshots use Claude as one concrete workspace; the control,
+            policy, hold, and evidence model is designed to stay agent-agnostic.
           </p>
         </Reveal>
 
@@ -424,6 +470,80 @@ function ProductTour() {
             </motion.div>
           </div>
         </div>
+
+        <div className="subpage-link-row" aria-label="Product pages">
+          <a href="/agents/"><span>01</span><strong>Agent workspaces</strong><ArrowRight size={14} /></a>
+          <a href="/architecture/"><span>02</span><strong>Architecture</strong><ArrowRight size={14} /></a>
+          <a href="/security/"><span>03</span><strong>Security model</strong><ArrowRight size={14} /></a>
+          <a href="/getting-started/"><span>04</span><strong>Get started</strong><ArrowRight size={14} /></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AgentCoverage() {
+  return (
+    <section className="section agent-section" id="agents">
+      <div className="shell">
+        <Reveal className="section-intro narrow">
+          <p className="eyebrow">Agent-agnostic by design</p>
+          <h2>Bring your agent stack. Keep one security plane.</h2>
+          <p>
+            Claude, NanoClaw, OpenClaw, Codex, Hermes Agent, and the next
+            runtime your team adopts should not each require a new security
+            operating model. ONEComputer gives them the same governed place to
+            work.
+          </p>
+        </Reveal>
+
+        <div className="agent-command">
+          <Reveal className="agent-command-visual">
+            <div className="agent-command-grid" aria-hidden="true" />
+            <span className="agent-command-orbit agent-command-orbit-one" />
+            <span className="agent-command-orbit agent-command-orbit-two" />
+            <span className="agent-command-status"><i /> Runtime boundary active</span>
+            <span className="agent-command-label">Safe place for</span>
+            <div className="agent-command-name"><AgentRotator /></div>
+            <span className="agent-command-caption">same workspace · same policy · same evidence</span>
+          </Reveal>
+          <Reveal className="agent-command-copy" delay={0.12}>
+            <p className="eyebrow">No vendor lock-in at the boundary</p>
+            <h3>Adopt faster without multiplying risk.</h3>
+            <p>
+              The agent can change. Your policy, isolation, approval authority,
+              and audit trail do not have to. Connect the surface your teams
+              need while ONEComputer keeps the operating boundary consistent.
+            </p>
+            <div className="agent-command-points">
+              <span><Check size={14} /> One cloud computer model</span>
+              <span><Check size={14} /> One policy gateway</span>
+              <span><Check size={14} /> One external trust boundary</span>
+            </div>
+            <a className="inline-link" href="/agents/">Explore agent workspaces <ArrowRight size={14} /></a>
+          </Reveal>
+        </div>
+
+        <div className="agent-grid" aria-label="Agent surfaces ONEComputer is designed to host">
+          {agentOptions.map((agent, index) => (
+            <motion.a
+              key={agent.id}
+              className="agent-card"
+              href={agent.href}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ delay: index * 0.06, duration: 0.5 }}
+              whileHover={{ y: -5, borderColor: "rgba(25, 186, 93, .55)" }}
+            >
+              <span className={`agent-mark agent-mark-${agent.id}`} aria-hidden="true">{agent.name.slice(0, 1)}</span>
+              <span className="agent-card-copy"><strong>{agent.name}</strong><small>{agent.kind}</small></span>
+              <ArrowUpRight size={15} className="agent-card-arrow" />
+            </motion.a>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -452,11 +572,11 @@ function EnterpriseStory() {
 
         <Reveal className="enterprise-copy" delay={0.12}>
           <p className="eyebrow">The enterprise path to agentic work</p>
-          <h2>Give people Claude. Give security a boundary.</h2>
+          <h2>Give teams their agents. Give security a boundary.</h2>
           <p>
             A chat window is not an operating model. ONEComputer gives every
-            team a controlled computer where Claude can work with files,
-            tools, and context—while the company keeps the controls that make
+            agent a controlled computer where it can work with files, tools,
+            and context—while the company keeps the controls that make
             adoption responsible.
           </p>
           <div className="enterprise-points">
@@ -542,6 +662,7 @@ function SecurityFlow() {
             </ul>
           </Reveal>
         </div>
+        <a className="inline-link flow-link" href="/security/">Read the security model <ArrowRight size={14} /></a>
       </div>
     </section>
   );
@@ -561,10 +682,13 @@ function OpenSource() {
               ONEComputer is forked from ONECli and evolves as the business
               application over OpenVTC. The stack stays open at the trust
               boundary, while teams get a practical control plane for running
-              Claude securely in their own cloud.
+              their chosen agents securely in their own cloud.
             </p>
             <a className="inline-link" href={GITHUB} target="_blank" rel="noreferrer">
               Explore the organization <ArrowUpRight size={14} />
+            </a>
+            <a className="inline-link" href={DOCS}>
+              Read the architecture docs <ArrowRight size={14} />
             </a>
           </Reveal>
         </div>
@@ -613,7 +737,7 @@ function FinalCta() {
         />
         <div>
           <p className="eyebrow">Build the governed path</p>
-          <h2>Give teams Claude.<br />Keep the boundary human.</h2>
+          <h2>Give teams their agents.<br />Keep the boundary human.</h2>
         </div>
         <div className="cta-actions">
           <motion.a className="button button-brand" href={GITHUB} target="_blank" rel="noreferrer" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
@@ -625,13 +749,293 @@ function FinalCta() {
           <motion.a className="button button-quiet" href={DOCS} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
             Read the docs <ArrowRight size={14} />
           </motion.a>
+          <motion.a className="button button-quiet" href="/getting-started/" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+            Get started <ArrowRight size={14} />
+          </motion.a>
         </div>
       </motion.div>
     </section>
   );
 }
 
-export default function App() {
+function SiteFooter() {
+  return (
+    <footer className="shell footer">
+      <Logo />
+      <span>Open-source governed AI computers · forked from ONECli</span>
+      <a href="https://github.com/ONE-Computer" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a>
+    </footer>
+  );
+}
+
+function SubpageHero({ eyebrow, title, body, step, primaryHref = DOCS, primaryText = "Read the docs", secondaryHref = GITHUB, secondaryText = "View on GitHub" }) {
+  return (
+    <section className="subpage-hero">
+      <div className="shell subpage-hero-grid">
+        <Reveal className="subpage-hero-copy">
+          <p className="eyebrow">{eyebrow}</p>
+          <h1>{title}</h1>
+          <p>{body}</p>
+          <div className="hero-actions">
+            <motion.a className="button button-brand" href={primaryHref} target={primaryHref.startsWith("http") ? "_blank" : undefined} rel={primaryHref.startsWith("http") ? "noreferrer" : undefined} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+              {primaryText} <ArrowRight size={15} />
+            </motion.a>
+            <motion.a className="button button-quiet" href={secondaryHref} target={secondaryHref.startsWith("http") ? "_blank" : undefined} rel={secondaryHref.startsWith("http") ? "noreferrer" : undefined} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+              {secondaryText} <ArrowUpRight size={14} />
+            </motion.a>
+          </div>
+        </Reveal>
+        <Reveal className="subpage-hero-capture" delay={0.12}>
+          <ProductCapture step={step} hero />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ScreenshotGrid({ steps }) {
+  return (
+    <div className="subpage-screenshot-grid">
+      {steps.map((step, index) => (
+        <Reveal key={step.id} delay={index * 0.08}>
+          <ProductCapture step={step} />
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+function AgentsSubpage() {
+  return (
+    <>
+      <SubpageHero
+        eyebrow="Agent workspaces"
+        title={<>A safe computer for <span><AgentRotator /></span>.</>}
+        body="Give teams a governed place to run the agent they choose. ONEComputer standardizes the workspace, policy boundary, human approval, and evidence trail while the agent surface keeps evolving."
+        step={productSteps[0]}
+        primaryHref="#agent-surfaces"
+        primaryText="Explore agent surfaces"
+        secondaryHref={CLOUD}
+        secondaryText="Open cloud console"
+      />
+      <section className="section subpage-section" id="agent-surfaces">
+        <div className="shell">
+          <AgentCoverage />
+          <ScreenshotGrid steps={[productSteps[0], productSteps[1]]} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function SecuritySubpage() {
+  return (
+    <>
+      <SubpageHero
+        eyebrow="Security by separation"
+        title={<>Let any agent move fast. <span>Keep authority outside the app.</span></>}
+        body="ONEComputer owns the business workflow and runtime boundary. OpenVTC owns identity, wallet custody, Trust Tasks, and the signed decision. The browser can request approval; it cannot manufacture it."
+        step={productSteps[3]}
+        primaryHref={DOCS + "governance/approvals"}
+        primaryText="Read the approval model"
+        secondaryHref={CLOUD + "/approvals"}
+        secondaryText="Open approvals"
+      />
+      <SecurityFlow />
+      <section className="section subpage-section">
+        <div className="shell">
+          <Reveal className="section-intro narrow">
+            <p className="eyebrow">Evidence in the product</p>
+            <h2>Policy and approval are visible, testable, and separate.</h2>
+          </Reveal>
+          <ScreenshotGrid steps={[productSteps[2], productSteps[3]]} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function ArchitectureSubpage() {
+  const layers = [
+    ["Agent runtime", "Claude, NanoClaw, OpenClaw, Codex, Hermes Agent, or another agent works inside an isolated computer."],
+    ["ONEComputer control plane", "The business layer owns users, policy, sandbox lifecycle, gateway holds, and evidence views."],
+    ["OpenVTC trust plane", "Verified identity, Trust Tasks, external wallet custody, signed decisions, expiry, and replay protection."],
+  ];
+
+  return (
+    <>
+      <SubpageHero
+        eyebrow="Architecture"
+        title={<>A thin business layer over an <span>open trust plane.</span></>}
+        body="ONEComputer is the enterprise control and enforcement edge. OpenVTC is the independent trust layer underneath. The boundary is explicit so the business app can move quickly without becoming its own root of trust."
+        step={productSteps[1]}
+        primaryHref={DOCS + "architecture/"}
+        primaryText="Read the architecture docs"
+        secondaryHref="https://github.com/OpenVTC/wiki"
+        secondaryText="Open OpenVTC wiki"
+      />
+      <section className="section subpage-section">
+        <div className="shell">
+          <Reveal className="section-intro narrow">
+            <p className="eyebrow">Three layers, one operating model</p>
+            <h2>Work in the computer. Govern in the control plane. Prove in the trust plane.</h2>
+          </Reveal>
+          <div className="architecture-layers">
+            {layers.map(([name, text], index) => (
+              <Reveal className="architecture-layer" delay={index * 0.08} key={name}>
+                <span className="architecture-layer-number">0{index + 1}</span>
+                <div><h3>{name}</h3><p>{text}</p></div>
+              </Reveal>
+            ))}
+          </div>
+          <ScreenshotGrid steps={[productSteps[1], productSteps[0]]} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function OpenSourceSubpage() {
+  return (
+    <>
+      <SubpageHero
+        eyebrow="Open source by design"
+        title={<>Enterprise control. <span>Open foundations.</span></>}
+        body="ONEComputer is forked from ONECli and evolves as the business application over OpenVTC. Explore the repositories, understand the runtime boundary, and build the governed path with us."
+        step={productSteps[1]}
+        primaryHref={GITHUB}
+        primaryText="Explore GitHub"
+        secondaryHref={DOCS}
+        secondaryText="Read the docs"
+      />
+      <OpenSource />
+      <section className="section subpage-section">
+        <div className="shell">
+          <div className="resource-banner">
+            <div><p className="eyebrow">Build with the source</p><h2>Fork the app. Keep the trust boundary explicit.</h2></div>
+            <div className="cta-actions resource-actions">
+              <motion.a className="button button-brand" href={GITHUB} target="_blank" rel="noreferrer" whileHover={{ y: -2 }}>View ONEComputer <ArrowUpRight size={14} /></motion.a>
+              <motion.a className="button button-quiet" href={DOCS + "reference/repository-map"} whileHover={{ y: -2 }}>Repository map <ArrowRight size={14} /></motion.a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function GettingStartedSubpage() {
+  return (
+    <>
+      <SubpageHero
+        eyebrow="Getting started"
+        title={<>From first install to your first <span>governed workspace.</span></>}
+        body="The open-source setup path gets a contributor from a clean machine to the local web/API, Rust gateway, PostgreSQL, and documentation in a few commands."
+        step={productSteps[0]}
+        primaryHref={DOCS + "getting-started/installation"}
+        primaryText="Open installation guide"
+        secondaryHref="https://raw.githubusercontent.com/ONE-Computer/onecomputer/main/scripts/install.sh"
+        secondaryText="View install script"
+      />
+      <section className="section subpage-section">
+        <div className="shell">
+          <div className="install-layout">
+            <Reveal className="install-card">
+              <p className="eyebrow">One-line install</p>
+              <h2>Start with the OSS path.</h2>
+              <pre><code>{"curl -fsSL https://raw.githubusercontent.com/ONE-Computer/onecomputer/main/scripts/install.sh | sh"}</code></pre>
+              <p>Review the script first for sensitive environments. It is designed to be rerunnable, preserves existing `.env` and Docker volumes, and never uploads credentials.</p>
+              <a className="inline-link" href={DOCS + "getting-started/installation"}>See prerequisites and options <ArrowRight size={14} /></a>
+            </Reveal>
+            <Reveal className="install-checklist" delay={0.12}>
+              <p className="eyebrow">What happens next</p>
+              {[
+                "Clone or reuse the ONEComputer checkout",
+                "Install locked dependencies and generate Prisma",
+                "Start PostgreSQL and apply migrations",
+                "Run the portal and Rust gateway locally",
+              ].map((item) => <span key={item}><Check size={15} /> {item}</span>)}
+            </Reveal>
+          </div>
+          <ScreenshotGrid steps={[productSteps[0], productSteps[2]]} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function OpenVtcSubpage() {
+  const concepts = [
+    ["Identity", "A verifiable answer to: who is this person, wallet, or service?"],
+    ["Trust Task", "A structured request that says what decision is needed, for which exact action, and until when."],
+    ["Wallet", "The separate place that holds the private key and lets an authorized person sign."],
+    ["Proof", "The signed response that ONEComputer verifies before it releases the held action."],
+  ];
+
+  return (
+    <>
+      <SubpageHero
+        eyebrow="OpenVTC for humans"
+        title={<>What is <span>OpenVTC?</span></>}
+        body="OpenVTC is the trust layer underneath ONEComputer. In plain language: it helps software prove who is acting, ask the right person for a decision, and verify that the decision is authentic before anything consequential is released."
+        step={productSteps[3]}
+        primaryHref={DOCS + "architecture/openvtc-boundary"}
+        primaryText="Read the trust boundary"
+        secondaryHref="https://github.com/OpenVTC/wiki"
+        secondaryText="Explore the OpenVTC wiki"
+      />
+      <section className="section subpage-section">
+        <div className="shell">
+          <Reveal className="section-intro narrow">
+            <p className="eyebrow">The simple version</p>
+            <h2>It is the part that proves the decision.</h2>
+            <p>ONEComputer can run the work and pause an action. OpenVTC keeps the identity, key custody, and signed approval outside the business app.</p>
+          </Reveal>
+          <div className="concept-grid">
+            {concepts.map(([name, text], index) => (
+              <Reveal className="concept-card" delay={index * 0.08} key={name}>
+                <span>0{index + 1}</span><h3>{name}</h3><p>{text}</p>
+              </Reveal>
+            ))}
+          </div>
+          <div className="trust-explainer-flow">
+            {["Agent asks", "ONEComputer holds", "OpenVTC delivers", "Wallet signs", "ONEComputer verifies"].map((label, index) => (
+              <motion.div className="trust-explainer-node" key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: index * 0.08 }}>
+                <b>{label}</b><small>{index === 0 ? "consequential action" : index === 1 ? "stable digest" : index === 2 ? "Trust Task" : index === 3 ? "external key" : "release once"}</small>
+              </motion.div>
+            ))}
+          </div>
+          <ScreenshotGrid steps={[productSteps[3], productSteps[1]]} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Subpage({ page }) {
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
+  const content = {
+    agents: <AgentsSubpage />,
+    security: <SecuritySubpage />,
+    architecture: <ArchitectureSubpage />,
+    "open-source": <OpenSourceSubpage />,
+    "getting-started": <GettingStartedSubpage />,
+    openvtc: <OpenVtcSubpage />,
+  }[page] || <GettingStartedSubpage />;
+
+  return (
+    <div className="app-shell subpage-shell">
+      <Nav progress={progress} page={page} />
+      <main>{content}</main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+export default function App({ page = "home" }) {
+  if (page !== "home") return <Subpage page={page} />;
+
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
 
@@ -641,16 +1045,13 @@ export default function App() {
       <main>
         <Hero />
         <ProductTour />
+        <AgentCoverage />
         <EnterpriseStory />
         <SecurityFlow />
         <OpenSource />
         <FinalCta />
       </main>
-      <footer className="shell footer">
-        <Logo />
-        <span>Open-source governed AI computers · forked from ONECli</span>
-        <a href="https://github.com/ONE-Computer" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

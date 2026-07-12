@@ -4,10 +4,12 @@ import { MotionConfig } from "framer-motion";
 import App from "./App";
 import "./styles.css";
 
+const page = document.body.dataset.page || "home";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <MotionConfig reducedMotion="user">
-      <App />
+      <App page={page} />
     </MotionConfig>
   </StrictMode>,
 );

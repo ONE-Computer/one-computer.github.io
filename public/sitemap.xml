@@ -5,4 +5,11 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://one-computer.github.io/agents/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://one-computer.github.io/security/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://one-computer.github.io/architecture/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://one-computer.github.io/openvtc/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://one-computer.github.io/open-source/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://one-computer.github.io/getting-started/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://one-computer.github.io/docs/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
