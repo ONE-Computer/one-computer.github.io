@@ -148,6 +148,51 @@ const enterpriseIntegrations = [
   { name: "EDR · network controls", label: "Respond with context", text: "Use endpoint risk and network policy without tying your security program to one AI agent.", icon: PlugZap },
 ];
 
+const approvalScenarios = [
+  {
+    id: "customer-report",
+    label: "Share customer data",
+    agent: "Claude Code",
+    title: "Export customer report",
+    action: "Send customer-report.csv to an external collaboration workspace.",
+    walletBody: "Claude Code wants to send a sensitive file outside the company workspace.",
+    requestedBy: "Research team workspace",
+    policy: "A manager must approve",
+    policyDetail: "Customer data cannot leave the company without a manager's decision.",
+    destination: "external.collab",
+    digest: "8F2A…9C11",
+    icon: Database,
+  },
+  {
+    id: "production-change",
+    label: "Change production",
+    agent: "Codex",
+    title: "Update production workflow",
+    action: "Modify the deployment workflow used by the production environment.",
+    walletBody: "Codex wants to change a workflow that can deploy code to production.",
+    requestedBy: "Platform team workspace",
+    policy: "Engineering lead approval",
+    policyDetail: "Production changes require an engineering lead to review the exact update.",
+    destination: "github.com/company/app",
+    digest: "2C41…A77B",
+    icon: GitFork,
+  },
+  {
+    id: "private-repository",
+    label: "Connect private code",
+    agent: "OpenClaw",
+    title: "Connect private repository",
+    action: "Give a new agent access to a private source-code repository.",
+    walletBody: "OpenClaw wants access to private company code for the first time.",
+    requestedBy: "Operations workspace",
+    policy: "Repository owner approval",
+    policyDetail: "A repository owner must approve new agent access to private code.",
+    destination: "private repository",
+    digest: "71DD…3B04",
+    icon: PlugZap,
+  },
+];
+
 const reveal = {
   hidden: { opacity: 0, y: 28 },
   visible: (delay = 0) => ({
@@ -418,11 +463,11 @@ function Hero() {
           >
             <motion.a
               className="button button-brand"
-              href="#product"
+              href="#approval-demo"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              Explore the product <ArrowDown size={15} />
+              Try a signed approval <ArrowDown size={15} />
             </motion.a>
             <motion.a
               className="button button-quiet"
@@ -1060,7 +1105,7 @@ function AgentSecurityPrimer() {
   );
 }
 
-function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
+function VtiWalletMock({ available, decision, onApprove, onDeny, onReset, request = approvalScenarios[0] }) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -1082,12 +1127,12 @@ function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
             <motion.div className="wallet-request" key="pending" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
               <div className="wallet-request-icon"><BellRing size={20} /></div>
               <p className="eyebrow">ONEComputer needs a decision</p>
-              <h3>Export customer report</h3>
-              <p>Claude Code wants to send a sensitive file outside the company workspace.</p>
+              <h3>{request.title}</h3>
+              <p>{request.walletBody}</p>
               <div className="wallet-request-facts">
-                <span><small>Requested by</small><b>Research team workspace</b></span>
-                <span><small>Policy</small><b>A manager must approve</b></span>
-                <span><small>Task digest</small><code>8F2A…9C11</code></span>
+                <span><small>Requested by</small><b>{request.requestedBy}</b></span>
+                <span><small>Policy</small><b>{request.policy}</b></span>
+                <span><small>Task digest</small><code>{request.digest}</code></span>
                 <span><small>Expires</small><b>4 minutes</b></span>
               </div>
               <div className="wallet-actions">
@@ -1111,6 +1156,138 @@ function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
         <div className="wallet-home-indicator" />
       </motion.div>
     </div>
+  );
+}
+
+function HomeApprovalDemo() {
+  const reduceMotion = useReducedMotion();
+  const [scenarioIndex, setScenarioIndex] = useState(0);
+  const [decision, setDecision] = useState("pending");
+  const request = approvalScenarios[scenarioIndex];
+  const RequestIcon = request.icon;
+
+  const chooseScenario = (index) => {
+    setScenarioIndex(index);
+    setDecision("pending");
+  };
+
+  const outcome = decision === "approved"
+    ? "Approval verified · this action may continue once"
+    : decision === "denied"
+      ? "Denial verified · this action remains blocked"
+      : "Action paused · waiting for the manager";
+
+  return (
+    <section className="section home-approval" id="approval-demo">
+      <div className="home-approval-glow" aria-hidden="true" />
+      <div className="shell">
+        <Reveal className="section-intro home-approval-intro">
+          <p className="eyebrow">Try the approval path</p>
+          <h2>A sensitive action should never approve itself.</h2>
+          <p>Choose something an agent wants to do, then make the decision in the separate VTI wallet. ONEComputer can pause the request and verify the answer—but it cannot create the answer.</p>
+        </Reveal>
+
+        <div className="approval-scenarios" role="group" aria-label="Choose an approval example">
+          {approvalScenarios.map((scenario, index) => {
+            const Icon = scenario.icon;
+            const selected = index === scenarioIndex;
+            return (
+              <motion.button
+                type="button"
+                className={selected ? "is-active" : ""}
+                key={scenario.id}
+                aria-pressed={selected}
+                onClick={() => chooseScenario(index)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span><Icon size={15} /></span>
+                <small>Example {String(index + 1).padStart(2, "0")}</small>
+                <b>{scenario.label}</b>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        <div className={`approval-playground is-${decision}`}>
+          <div className="approval-request-panel">
+            <div className="approval-panel-top">
+              <span><i /> ONEComputer workspace</span>
+              <small>{request.agent} · isolated</small>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                className="approval-request-copy"
+                key={request.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                <span className="approval-request-icon"><RequestIcon size={20} /></span>
+                <p className="eyebrow">Agent request</p>
+                <h3>{request.title}</h3>
+                <p>{request.action}</p>
+                <div className="approval-request-details">
+                  <span><small>Destination</small><b>{request.destination}</b></span>
+                  <span><small>Request digest</small><code>{request.digest}</code></span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="approval-policy-trigger">
+              <ShieldCheck size={17} />
+              <span><small>Why ONEComputer paused it</small><b>{request.policyDetail}</b></span>
+            </div>
+
+            <div className="approval-event-list" aria-label="Approval verification progress">
+              <span className="is-complete"><i><Check size={11} /></i><b>Request detected</b><small>{request.agent}</small></span>
+              <span className="is-complete"><i><LockKeyhole size={11} /></i><b>Action paused</b><small>Policy applied</small></span>
+              <span className="is-complete"><i><Send size={11} /></i><b>Sent to wallet</b><small>Encrypted</small></span>
+              <span className={decision !== "pending" ? "is-complete" : ""}><i>{decision !== "pending" ? <Check size={11} /> : <span />}</i><b>Decision verified</b><small>{decision === "pending" ? "Waiting" : "Signed"}</small></span>
+            </div>
+
+            <motion.div
+              className="approval-outcome"
+              aria-live="polite"
+              key={`${request.id}-${decision}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <span>{decision === "approved" ? <BadgeCheck size={18} /> : decision === "denied" ? <X size={18} /> : <BellRing size={18} />}</span>
+              <div><small>ONEComputer status</small><b>{outcome}</b></div>
+            </motion.div>
+          </div>
+
+          <div className="approval-secure-link" aria-hidden="true">
+            <motion.span
+              animate={reduceMotion ? undefined : { x: ["-42%", "42%", "-42%"] }}
+              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div><Fingerprint size={15} /><b>OpenVTC</b><small>Secure request · signed response</small></div>
+          </div>
+
+          <div className="approval-wallet-column">
+            <div className="approval-instruction"><Smartphone size={15} /><span><b>Your turn</b><small>Approve or deny in the wallet</small></span><ArrowRight size={14} /></div>
+            <VtiWalletMock
+              available
+              decision={decision}
+              request={request}
+              onApprove={() => setDecision("approved")}
+              onDeny={() => setDecision("denied")}
+              onReset={() => setDecision("pending")}
+            />
+          </div>
+        </div>
+
+        <div className="approval-principles">
+          <span><b>01</b><small>ONEComputer pauses the exact action</small></span>
+          <span><b>02</b><small>The manager decides on a separate device</small></span>
+          <span><b>03</b><small>The signed answer works for this request only</small></span>
+          <a href="/openvtc/">Understand OpenVTC <ArrowRight size={14} /></a>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1482,9 +1659,9 @@ export default function App({ page = "home" }) {
       <main>
         <Hero />
         <ProductTour />
+        <HomeApprovalDemo />
         <AgentCoverage />
         <EnterpriseStory />
-        <EnterpriseJourney />
         <SecurityFlow />
         <EnterpriseIntegrations />
         <OpenSource />
