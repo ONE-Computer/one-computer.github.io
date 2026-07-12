@@ -29,6 +29,7 @@ import {
 
 const GITHUB = "https://github.com/ONE-Computer/onecomputer";
 const CLOUD = "https://onecomputer-openvtc.eastus2.cloudapp.azure.com";
+const DOCS = "/docs/";
 
 const productSteps = [
   {
@@ -211,6 +212,7 @@ function Nav({ progress }) {
         <div className="nav-links">
           <a href="#product">Product</a>
           <a href="#security">Security</a>
+          <a href={DOCS}>Docs</a>
           <a href="#open-source">Open source</a>
         </div>
         <motion.a
@@ -285,13 +287,11 @@ function Hero() {
             </motion.a>
             <motion.a
               className="button button-quiet"
-              href={CLOUD}
-              target="_blank"
-              rel="noreferrer"
+              href={DOCS}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              Open cloud demo <ArrowUpRight size={14} />
+              Read the docs <ArrowRight size={14} />
             </motion.a>
           </motion.div>
         </motion.div>
@@ -621,6 +621,9 @@ function FinalCta() {
           </motion.a>
           <motion.a className="button button-quiet" href={CLOUD} target="_blank" rel="noreferrer" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
             Open cloud demo <ArrowUpRight size={14} />
+          </motion.a>
+          <motion.a className="button button-quiet" href={DOCS} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+            Read the docs <ArrowRight size={14} />
           </motion.a>
         </div>
       </motion.div>
