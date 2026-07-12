@@ -11,20 +11,33 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
+  BellRing,
   BadgeCheck,
+  Building2,
   Check,
+  CircleCheck,
   Cpu,
+  Database,
   FileCheck2,
+  Fingerprint,
   Github,
   GitFork,
+  KeyRound,
+  Layers3,
   LockKeyhole,
   Monitor,
   Network,
+  PlugZap,
   ScanLine,
+  Send,
   Server,
   ShieldCheck,
   SlidersHorizontal,
+  Smartphone,
+  UserRound,
+  UsersRound,
   WalletCards,
+  X,
 } from "lucide-react";
 
 const GITHUB = "https://github.com/ONE-Computer/onecomputer";
@@ -115,6 +128,24 @@ const flowNodes = [
   { label: "Gateway hold", detail: "Pause the action", icon: LockKeyhole },
   { label: "VTI wallet", detail: "Sign externally", icon: WalletCards },
   { label: "Verified release", detail: "Release once", icon: BadgeCheck },
+];
+
+const enterpriseJourneySteps = [
+  { role: "Enterprise admin", title: "Provision the organization", detail: "Connect the company, define ownership, and establish the governed workspace boundary.", icon: Building2 },
+  { role: "Enterprise admin", title: "Set the company floor", detail: "Define the controls no team can weaken: identity, network, data, tools, and approval thresholds.", icon: SlidersHorizontal },
+  { role: "Manager", title: "Add team policy", detail: "Narrow access for the team's data, repositories, connectors, and higher-risk actions.", icon: UsersRound },
+  { role: "Employee", title: "Start a sandbox", detail: "Launch an isolated computer with the approved agent, tools, and policy already attached.", icon: UserRound },
+  { role: "Agent", title: "Work inside the boundary", detail: "Claude, OpenClaw, Codex, or another agent can use permitted tools without touching the wider enterprise.", icon: Cpu },
+  { role: "Gateway", title: "Hold a consequential action", detail: "A risky request is frozen with its exact payload, policy snapshot, digest, and intended approver.", icon: LockKeyhole },
+  { role: "VTI wallet", title: "Review and sign", detail: "The manager sees the canonical request on a separate device and signs approval or denial with an external key.", icon: Smartphone },
+  { role: "ONEComputer", title: "Verify and release once", detail: "The gateway verifies identity, signature, expiry, digest, and replay state before one-time release.", icon: BadgeCheck },
+];
+
+const enterpriseIntegrations = [
+  { name: "Microsoft Purview DLP", label: "Data controls", text: "Bring sensitive-information classification and data movement rules to the workspace boundary.", icon: Database },
+  { name: "Microsoft Intune", label: "Device posture", text: "Use managed-device and compliance signals when deciding who can enter governed workspaces.", icon: Smartphone },
+  { name: "SIEM · OpenTelemetry", label: "Security evidence", text: "Export holds, policy decisions, verified releases, and runtime events into enterprise monitoring.", icon: ScanLine },
+  { name: "EDR · network controls", label: "Runtime defense", text: "Connect endpoint risk, egress policy, and incident response without coupling them to one agent vendor.", icon: PlugZap },
 ];
 
 const reveal = {
@@ -376,8 +407,8 @@ function Hero() {
           >
             Give your enterprise one governed cloud runtime for the agent stack
             your teams choose. ONEComputer combines isolated workspaces,
-            company policy, and human-governed approvals—without forcing one
-            agent vendor on the business.
+            inherited company policy, and externally verifiable human
+            approvals—without forcing one agent vendor on the business.
           </motion.p>
           <motion.div
             className="hero-actions"
@@ -668,7 +699,7 @@ function EnterpriseStory() {
           </p>
           <div className="enterprise-points">
             <div><span><Server size={16} /></span><p><b>Provision in minutes</b><small>Spin up an isolated workspace from the control plane.</small></p></div>
-            <div><span><ShieldCheck size={16} /></span><p><b>Enforce the company floor</b><small>Apply identity, network, data, and action policy before work begins.</small></p></div>
+            <div><span><ShieldCheck size={16} /></span><p><b>Inherit policy by role</b><small>Enterprise admins set the floor; managers narrow it; employees launch inside it.</small></p></div>
             <div><span><FileCheck2 size={16} /></span><p><b>Leave an evidence trail</b><small>Connect holds, approvals, releases, and runtime activity.</small></p></div>
           </div>
           <a className="inline-link" href="#security">See how the boundary works <ArrowRight size={14} /></a>
@@ -855,9 +886,17 @@ function SiteFooter() {
   );
 }
 
-function SubpageHero({ eyebrow, title, body, step, primaryHref = DOCS, primaryText = "Read the docs", secondaryHref = GITHUB, secondaryText = "View on GitHub" }) {
+function SubpageHero({ eyebrow, title, body, step, visual = null, primaryHref = DOCS, primaryText = "Read the docs", secondaryHref = GITHUB, secondaryText = "View on GitHub" }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="subpage-hero">
+      <motion.div
+        className="subpage-hero-signal"
+        animate={reduceMotion ? undefined : { rotate: 360 }}
+        transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
+        aria-hidden="true"
+      />
       <div className="shell subpage-hero-grid">
         <Reveal className="subpage-hero-copy">
           <p className="eyebrow">{eyebrow}</p>
@@ -873,7 +912,12 @@ function SubpageHero({ eyebrow, title, body, step, primaryHref = DOCS, primaryTe
           </div>
         </Reveal>
         <Reveal className="subpage-hero-capture" delay={0.12}>
-          <ProductCapture step={step} hero />
+          <motion.div
+            animate={reduceMotion ? undefined : { y: [0, -7, 0] }}
+            transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {visual || <ProductCapture step={step} hero />}
+          </motion.div>
         </Reveal>
       </div>
     </section>
@@ -889,6 +933,295 @@ function ScreenshotGrid({ steps }) {
         </Reveal>
       ))}
     </div>
+  );
+}
+
+function TrustFoundationVisual() {
+  const reduceMotion = useReducedMotion();
+  const nodes = [
+    { label: "Agent request", detail: "Exact action", icon: Cpu },
+    { label: "OpenVTC / VTI", detail: "Identity + proof", icon: Network },
+    { label: "External wallet", detail: "Human key", icon: Smartphone },
+  ];
+
+  return (
+    <div className="trust-foundation-visual" aria-label="OpenVTC trust foundation diagram">
+      <div className="trust-foundation-grid" aria-hidden="true" />
+      <motion.div
+        className="trust-foundation-orbit trust-foundation-orbit-one"
+        animate={reduceMotion ? undefined : { rotate: 360 }}
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="trust-foundation-orbit trust-foundation-orbit-two"
+        animate={reduceMotion ? undefined : { rotate: -360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+      />
+      <div className="trust-foundation-nodes">
+        {nodes.map((node, index) => {
+          const Icon = node.icon;
+          return (
+            <motion.div
+              className={`trust-foundation-node ${index === 1 ? "is-core" : ""}`}
+              key={node.label}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + index * 0.12 }}
+            >
+              <span><Icon size={17} /></span>
+              <b>{node.label}</b>
+              <small>{node.detail}</small>
+            </motion.div>
+          );
+        })}
+      </div>
+      <motion.div
+        className="trust-foundation-packet"
+        animate={reduceMotion ? undefined : { left: ["8%", "48%", "88%", "48%", "8%"], opacity: [0, 1, 1, 1, 0] }}
+        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="trust-foundation-proof"><Fingerprint size={16} /><span><small>Verified authority</small><b>Signer · task · expiry · digest</b></span></div>
+    </div>
+  );
+}
+
+function AgentSecurityPrimer() {
+  const risks = [
+    ["The agent can misunderstand", "Autonomy means the model decides how to pursue a goal. It can take a path the user did not intend."],
+    ["External content can attack it", "Files, websites, messages, and tools can contain instructions designed to redirect the agent."],
+    ["Every tool expands the blast radius", "The more data and systems an agent can reach, the more consequential one mistake or compromise becomes."],
+  ];
+
+  const layers = [
+    ["Contain the environment", "ONEComputer isolates the agent, its files, tools, credentials, and network reach."],
+    ["Make policy explicit", "Company and team rules decide what is allowed, denied, logged, or held for review."],
+    ["Prove human authority", "OpenVTC keeps identity and signing keys outside the app, then returns verifiable evidence."],
+  ];
+
+  return (
+    <section className="section openvtc-primer" id="openvtc-foundation">
+      <div className="shell">
+        <Reveal className="section-intro openvtc-intro">
+          <p className="eyebrow">Start with the security problem</p>
+          <h2>A safe model is not a complete security boundary.</h2>
+          <p>An agent is a model connected to tools, data, and an environment. The useful part is that it can act. The hard part is deciding what it may reach—and proving who authorized the actions that matter.</p>
+        </Reveal>
+
+        <div className="security-primer-grid">
+          <Reveal className="security-primer-column">
+            <p className="security-primer-kicker"><BellRing size={15} /> Why agentic work changes risk</p>
+            {risks.map(([title, text], index) => (
+              <motion.div className="security-primer-card is-risk" key={title} whileHover={{ x: 5 }} transition={{ duration: 0.18 }}>
+                <span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div>
+              </motion.div>
+            ))}
+          </Reveal>
+          <Reveal className="security-primer-equation" delay={0.08}>
+            <p className="eyebrow">The ONEComputer model</p>
+            <div className="security-equation-row"><span><Server size={17} /> Contained runtime</span><i>+</i></div>
+            <div className="security-equation-row"><span><SlidersHorizontal size={17} /> Explicit policy</span><i>+</i></div>
+            <div className="security-equation-row"><span><Fingerprint size={17} /> Verifiable authority</span><i>=</i></div>
+            <div className="security-equation-result"><ShieldCheck size={21} /><b>Useful autonomy<br />with bounded risk</b></div>
+          </Reveal>
+          <Reveal className="security-primer-column" delay={0.16}>
+            <p className="security-primer-kicker"><ShieldCheck size={15} /> The layered response</p>
+            {layers.map(([title, text], index) => (
+              <motion.div className="security-primer-card is-control" key={title} whileHover={{ x: -5 }} transition={{ duration: 0.18 }}>
+                <span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div>
+              </motion.div>
+            ))}
+          </Reveal>
+        </div>
+
+        <div className="openvtc-definition">
+          <Reveal>
+            <p className="eyebrow">OpenVTC, from first principles</p>
+            <h2>It is an independent trust foundation—not another approval button.</h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p>OpenVTC is an open ecosystem for verifiable identity and trust relationships. VTI is the infrastructure that carries those identities, encrypted messages, and signed tasks. A VTA wallet keeps the person’s private key outside ONEComputer.</p>
+            <p>For ONEComputer, the practical outcome is simple: the application can ask for authority, but it cannot manufacture authority for itself.</p>
+            <div className="openvtc-terms">
+              <span><b>OpenVTC</b><small>The trust ecosystem and community model</small></span>
+              <span><b>VTI</b><small>The verifiable trust infrastructure</small></span>
+              <span><b>VTA wallet</b><small>The personal key holder and signer</small></span>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="security-reading">
+          <span>Further reading</span>
+          <a href="https://www.anthropic.com/research/trustworthy-agents" target="_blank" rel="noreferrer">Anthropic · Trustworthy agents <ArrowUpRight size={13} /></a>
+          <a href="https://www.anthropic.com/engineering/how-we-contain-claude" target="_blank" rel="noreferrer">Anthropic · Containing agents <ArrowUpRight size={13} /></a>
+          <a href="https://github.com/OpenVTC/wiki" target="_blank" rel="noreferrer">OpenVTC ecosystem wiki <ArrowUpRight size={13} /></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <div className="wallet-demo-wrap">
+      <div className="wallet-demo-label"><span><i /> Illustrative VTI wallet</span><small>Separate device · separate key</small></div>
+      <motion.div className="wallet-phone" animate={reduceMotion ? undefined : { y: [0, -5, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}>
+        <div className="wallet-phone-status"><span>9:41</span><span>● ● ●</span></div>
+        <div className="wallet-phone-header"><span><Fingerprint size={16} /></span><div><b>VTI Wallet</b><small>Manager identity verified</small></div><CircleCheck size={16} /></div>
+        <AnimatePresence mode="wait">
+          {!available && decision === "pending" ? (
+            <motion.div className="wallet-idle" key="idle" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+              <motion.span animate={reduceMotion ? undefined : { scale: [1, 1.06, 1] }} transition={{ duration: 3, repeat: Infinity }}><Fingerprint size={27} /></motion.span>
+              <p className="eyebrow">Trust agent ready</p>
+              <h3>No pending requests</h3>
+              <p>The wallet is listening for an encrypted Trust Task. Push notifications only wake the app; the signed request is retrieved through the trusted channel.</p>
+              <div className="wallet-idle-status"><i /><span><small>Secure channel</small><b>Connected</b></span></div>
+            </motion.div>
+          ) : decision === "pending" ? (
+            <motion.div className="wallet-request" key="pending" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+              <div className="wallet-request-icon"><BellRing size={20} /></div>
+              <p className="eyebrow">Approval requested</p>
+              <h3>Export customer report</h3>
+              <p>Claude Code wants to send a file classified as sensitive to an external destination.</p>
+              <div className="wallet-request-facts">
+                <span><small>Requested by</small><b>Research sandbox</b></span>
+                <span><small>Policy</small><b>Manager approval</b></span>
+                <span><small>Task digest</small><code>8F2A…9C11</code></span>
+                <span><small>Expires</small><b>4 minutes</b></span>
+              </div>
+              <div className="wallet-actions">
+                <motion.button type="button" className="wallet-deny" onClick={onDeny} whileTap={{ scale: 0.97 }}><X size={15} /> Deny</motion.button>
+                <motion.button type="button" className="wallet-approve" onClick={onApprove} whileTap={{ scale: 0.97 }}><Check size={15} /> Approve</motion.button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div className={`wallet-result is-${decision}`} key={decision} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
+              <motion.span initial={{ scale: 0.7 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 220 }}>
+                {decision === "approved" ? <BadgeCheck size={30} /> : <X size={30} />}
+              </motion.span>
+              <p className="eyebrow">Signed response</p>
+              <h3>{decision === "approved" ? "Approval signed" : "Request denied"}</h3>
+              <p>The wallet signed the exact task digest. ONEComputer can verify this response but cannot alter it.</p>
+              <div className="wallet-signature"><KeyRound size={14} /><code>did:webvh:manager • ed25519</code></div>
+              <button type="button" className="wallet-reset" onClick={onReset}>Run the demo again</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="wallet-home-indicator" />
+      </motion.div>
+    </div>
+  );
+}
+
+function EnterpriseJourney({ id = "journey" }) {
+  const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [decision, setDecision] = useState("pending");
+
+  useEffect(() => {
+    if (reduceMotion || paused || decision !== "pending" || active >= 6) return undefined;
+    const timer = window.setInterval(() => setActive((current) => (current + 1) % enterpriseJourneySteps.length), 3600);
+    return () => window.clearInterval(timer);
+  }, [active, decision, paused, reduceMotion]);
+
+  const step = enterpriseJourneySteps[active];
+  const StepIcon = step.icon;
+  const approve = () => { setDecision("approved"); setActive(7); setPaused(true); };
+  const deny = () => { setDecision("denied"); setActive(6); setPaused(true); };
+  const reset = () => { setDecision("pending"); setActive(5); setPaused(false); };
+
+  return (
+    <section className="section enterprise-journey" id={id}>
+      <div className="shell">
+        <Reveal className="section-intro enterprise-journey-intro">
+          <p className="eyebrow">The enterprise journey</p>
+          <h2>Set the boundary once. Let every team work inside it.</h2>
+          <p>Policy flows from the enterprise to the team to the workspace. Routine work stays fast. Consequential actions cross an independent trust boundary before release.</p>
+        </Reveal>
+
+        <div className="journey-timeline" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+          <motion.div className="journey-progress" animate={{ scaleX: (active + 1) / enterpriseJourneySteps.length }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} />
+          {enterpriseJourneySteps.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.button
+                type="button"
+                className={`${index === active ? "is-active" : ""} ${index < active ? "is-complete" : ""}`}
+                key={item.title}
+                onClick={() => { setActive(index); setPaused(true); }}
+                whileHover={{ y: -4 }}
+                aria-pressed={index === active}
+                disabled={index === 7 && decision === "pending"}
+              >
+                <span><Icon size={15} /></span><small>{item.role}</small><b>{item.title}</b>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        <div className="journey-demo">
+          <div className="journey-control">
+            <AnimatePresence mode="wait">
+              <motion.div className="journey-active-copy" key={step.title} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <span className="journey-step-icon"><StepIcon size={19} /></span>
+                <p className="eyebrow">Step {String(active + 1).padStart(2, "0")} · {step.role}</p>
+                <h3>{step.title}</h3>
+                <p>{step.detail}</p>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="policy-inheritance">
+              <motion.div className="policy-layer company-layer" animate={{ x: active >= 1 ? 0 : -5, opacity: active >= 1 ? 1 : 0.55 }}><Building2 size={14} /><span><small>Company floor</small><b>No public data export</b></span><Check size={13} /></motion.div>
+              <motion.div className="policy-layer manager-layer" animate={{ x: active >= 2 ? 0 : -5, opacity: active >= 2 ? 1 : 0.45 }}><UsersRound size={14} /><span><small>Team overlay</small><b>Manager signs sensitive actions</b></span><Check size={13} /></motion.div>
+              <motion.div className="policy-layer employee-layer" animate={{ x: active >= 3 ? 0 : -5, opacity: active >= 3 ? 1 : 0.35 }}><Monitor size={14} /><span><small>Workspace policy</small><b>Claude · isolated · policy attached</b></span><Check size={13} /></motion.div>
+            </div>
+
+            <div className={`gateway-event ${decision !== "pending" ? `is-${decision}` : ""}`}>
+              <span className="gateway-event-icon">{decision === "approved" ? <BadgeCheck size={18} /> : decision === "denied" ? <X size={18} /> : <LockKeyhole size={18} />}</span>
+              <div><small>Gateway state</small><b>{decision === "approved" ? "Signed proof verified · released once" : decision === "denied" ? "Signed denial verified · remains blocked" : active >= 5 ? "Action held · waiting for external proof" : "Monitoring permitted work"}</b></div>
+              <code>8F2A…9C11</code>
+            </div>
+          </div>
+
+          <div className="journey-trust-link" aria-hidden="true">
+            <motion.span animate={reduceMotion ? undefined : { y: ["8%", "84%", "8%"] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+            <small><Send size={13} /> encrypted Trust Task</small>
+          </div>
+
+          <VtiWalletMock available={active >= 5} decision={decision} onApprove={approve} onDeny={deny} onReset={reset} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EnterpriseIntegrations() {
+  return (
+    <section className="section integration-section">
+      <div className="shell">
+        <Reveal className="section-intro">
+          <p className="eyebrow">Designed for the enterprise security stack</p>
+          <h2>Keep the controls you already operate.</h2>
+          <p>ONEComputer is the workspace and enforcement layer. The roadmap is to consume signals from existing data, device, endpoint, and monitoring systems—without making any one vendor the agent runtime.</p>
+        </Reveal>
+        <div className="integration-grid">
+          {enterpriseIntegrations.map((integration, index) => {
+            const Icon = integration.icon;
+            return (
+              <motion.div className="integration-card" key={integration.name} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.07 }} whileHover={{ y: -5 }}>
+                <div className="integration-card-top"><span><Icon size={17} /></span><small>Coming soon</small></div>
+                <p className="eyebrow">{integration.label}</p>
+                <h3>{integration.name}</h3>
+                <p>{integration.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+        <div className="integration-note"><Layers3 size={16} /><span><b>Integration principle</b> Consume posture and policy signals at explicit seams. Keep OpenVTC as the authority for verifiable identity and signed human decisions.</span></div>
+      </div>
+    </section>
   );
 }
 
@@ -929,6 +1262,7 @@ function SecuritySubpage() {
         secondaryText="Open approvals"
       />
       <SecurityFlow />
+      <EnterpriseIntegrations />
       <section className="section subpage-section">
         <div className="shell">
           <Reveal className="section-intro narrow">
@@ -1053,30 +1387,31 @@ function GettingStartedSubpage() {
 
 function OpenVtcSubpage() {
   const concepts = [
-    ["Identity", "A verifiable answer to: who is this person, wallet, or service?"],
-    ["Trust Task", "A structured request that says what decision is needed, for which exact action, and until when."],
-    ["Wallet", "The separate place that holds the private key and lets an authorized person sign."],
-    ["Proof", "The signed response that ONEComputer verifies before it releases the held action."],
+    ["Identify the actor", "Resolve a verifiable identity for the employee, manager, wallet, service, or agent—not merely an account name."],
+    ["Name the exact task", "A Trust Task binds the decision to one action, payload digest, policy context, approver, and expiry."],
+    ["Keep the key elsewhere", "The VTA wallet holds the manager's private key on a separate device, outside the requesting application."],
+    ["Return portable proof", "A signed approval or denial can be independently verified and cannot be silently changed by ONEComputer."],
   ];
 
   return (
     <>
       <SubpageHero
-        eyebrow="OpenVTC for humans"
-        title={<>What is <span>OpenVTC?</span></>}
-        body="OpenVTC is the trust layer underneath ONEComputer. In plain language: it helps software prove who is acting, ask the right person for a decision, and verify that the decision is authentic before anything consequential is released."
-        step={productSteps[3]}
-        primaryHref={DOCS + "architecture/openvtc-boundary"}
-        primaryText="Read the trust boundary"
-        secondaryHref="https://github.com/OpenVTC/wiki"
-        secondaryText="Explore the OpenVTC wiki"
+        eyebrow="The trust foundation for accountable agents"
+        title={<>Agents can act. <span>OpenVTC proves who authorized what.</span></>}
+        body="AI agents read files, use tools, and trigger real actions. ONEComputer limits where that work can happen. OpenVTC provides the independent identity, key custody, secure messaging, and signed evidence needed to trust consequential decisions."
+        visual={<TrustFoundationVisual />}
+        primaryHref="#openvtc-foundation"
+        primaryText="Start with the fundamentals"
+        secondaryHref="#openvtc-journey"
+        secondaryText="See the E2E journey"
       />
-      <section className="section subpage-section">
+      <AgentSecurityPrimer />
+      <section className="section subpage-section openvtc-mechanics">
         <div className="shell">
-          <Reveal className="section-intro narrow">
-            <p className="eyebrow">The simple version</p>
-            <h2>It is the part that proves the decision.</h2>
-            <p>ONEComputer can run the work and pause an action. OpenVTC keeps the identity, key custody, and signed approval outside the business app.</p>
+          <Reveal className="section-intro">
+            <p className="eyebrow">From request to verifiable release</p>
+            <h2>Four foundations. Five steps. One verifiable decision.</h2>
+            <p>The portal may display the request. The gateway may hold the work. Authority becomes real only when the external trust path returns a valid response for that exact action.</p>
           </Reveal>
           <div className="concept-grid">
             {concepts.map(([name, text], index) => (
@@ -1086,13 +1421,28 @@ function OpenVtcSubpage() {
             ))}
           </div>
           <div className="trust-explainer-flow">
-            {["Agent asks", "ONEComputer holds", "OpenVTC delivers", "Wallet signs", "ONEComputer verifies"].map((label, index) => (
+            {["Agent requests", "Gateway freezes", "VTI delivers", "Wallet decides", "Proof releases once"].map((label, index) => (
               <motion.div className="trust-explainer-node" key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: index * 0.08 }}>
-                <b>{label}</b><small>{index === 0 ? "consequential action" : index === 1 ? "stable digest" : index === 2 ? "Trust Task" : index === 3 ? "external key" : "release once"}</small>
+                <b>{label}</b><small>{index === 0 ? "consequential action" : index === 1 ? "payload + digest" : index === 2 ? "encrypted Trust Task" : index === 3 ? "external human key" : "verify + prevent replay"}</small>
               </motion.div>
             ))}
           </div>
+          <div className="mechanics-rule"><LockKeyhole size={17} /><span><b>The key rule</b> The system asking for approval cannot also be the system that creates the authoritative approval.</span></div>
+        </div>
+      </section>
+      <EnterpriseJourney id="openvtc-journey" />
+      <EnterpriseIntegrations />
+      <section className="section subpage-section">
+        <div className="shell">
+          <Reveal className="section-intro narrow">
+            <p className="eyebrow">Visible in the product</p>
+            <h2>The portal shows the hold. The wallet owns the decision.</h2>
+          </Reveal>
           <ScreenshotGrid steps={[productSteps[3], productSteps[1]]} />
+          <div className="openvtc-doc-links">
+            <a className="inline-link" href={DOCS + "architecture/openvtc-boundary"}>Read the ONEComputer trust boundary <ArrowRight size={14} /></a>
+            <a className="inline-link" href="https://github.com/OpenVTC/wiki" target="_blank" rel="noreferrer">Explore the OpenVTC ecosystem wiki <ArrowUpRight size={14} /></a>
+          </div>
         </div>
       </section>
     </>
@@ -1134,7 +1484,9 @@ export default function App({ page = "home" }) {
         <ProductTour />
         <AgentCoverage />
         <EnterpriseStory />
+        <EnterpriseJourney />
         <SecurityFlow />
+        <EnterpriseIntegrations />
         <OpenSource />
         <FinalCta />
       </main>
