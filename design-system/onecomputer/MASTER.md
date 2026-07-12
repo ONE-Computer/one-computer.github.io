@@ -1,203 +1,68 @@
-# Design System Master File
+# ONEComputer public design system
 
-> **LOGIC:** When building a specific page, first check `design-system/pages/[page-name].md`.
-> If that file exists, its rules **override** this Master file.
-> If not, strictly follow the rules below.
+The public site should feel like the ONEComputer application at editorial
+scale—not like an unrelated cybersecurity campaign.
 
----
+## Product tokens
 
-**Project:** ONEComputer
-**Generated:** 2026-07-12 19:56:06
-**Category:** Cybersecurity Platform
+| Role | Value |
+| --- | --- |
+| Page background | `#1f1e1d` |
+| Deep background / sidebar | `#171615` / `#1a1918` |
+| Card surface | `#272625` |
+| Primary text | `#f5f5f3` |
+| Muted text | `#aaa7a2` |
+| Border | `#3b3937` |
+| Brand / enforcement | `#19ba5d` |
+| Warning | `#e5ad41` |
+| Danger | `#e05b55` |
+| Standard radius | `8–10px` |
 
----
+Typography is local Geist for product and editorial copy, with Geist Mono for
+eyebrows, state, and evidence labels. Large headings may be expressive, but
+controls and captures must preserve the product's compact proportions.
 
-## Global Rules
+## Visual principles
 
-### Color Palette
+1. Lead with the real product. Use deployed screenshots and name the surface.
+2. Explain trust through separation: ONEComputer runs workflow; OpenVTC holds
+   identity, signing authority, Trust Tasks, and evidence.
+3. Use motion to clarify transitions and state, never as ambient noise.
+4. Use green only for brand, verified state, enforcement, and primary actions.
+5. Prefer quiet borders and warm charcoal depth to neon glow or blue gradients.
+6. Keep technical claims specific, auditable, and free of roadmap language.
 
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#0369A1` | `--color-primary` |
-| Secondary | `#0EA5E9` | `--color-secondary` |
-| CTA/Accent | `#22C55E` | `--color-cta` |
-| Background | `#F0F9FF` | `--color-background` |
-| Text | `#0C4A6E` | `--color-text` |
+## Motion language
 
-**Color Notes:** Security blue + protected green
+- Framer Motion owns page reveals, product-state transitions, scroll progress,
+  the approval path, and small interaction feedback.
+- Default easing: `[0.22, 1, 0.36, 1]`.
+- Interaction transitions should finish in roughly 180–300 ms; editorial reveals
+  may take 550–800 ms.
+- Honor the operating system's reduced-motion preference and never depend on
+  animation to communicate required content.
 
-### Typography
+## Product captures
 
-- **Heading Font:** JetBrains Mono
-- **Body Font:** IBM Plex Sans
-- **Mood:** code, developer, technical, precise, functional, hacker
-- **Google Fonts:** [JetBrains Mono + IBM Plex Sans](https://fonts.google.com/share?selection.family=IBM+Plex+Sans:wght@300;400;500;600;700|JetBrains+Mono:wght@400;500;600;700)
+- Show a browser or application frame only when it gives useful context.
+- Do not invent dashboards or metrics.
+- Cover internal test identifiers in the presentation layer; do not silently
+  alter the source image.
+- Captions must identify captures as coming from the deployed cloud build.
 
-**CSS Import:**
-```css
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-```
+## Accessibility and responsive requirements
 
-### Spacing Variables
+- Preserve visible keyboard focus and semantic buttons, links, tabs, and panels.
+- Maintain WCAG AA text contrast.
+- Verify at 375, 768, 1024, and 1440 px widths.
+- Avoid horizontal page overflow; horizontal scrolling is permitted only inside
+  a clearly bounded product-tab control on small screens.
+- Fixed navigation must not cover linked section headings.
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
+## Forbidden patterns
 
-### Shadow Depths
-
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
-
----
-
-## Component Specs
-
-### Buttons
-
-```css
-/* Primary Button */
-.btn-primary {
-  background: #22C55E;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #0369A1;
-  border: 2px solid #0369A1;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
-
-### Cards
-
-```css
-.card {
-  background: #F0F9FF;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #0369A1;
-  outline: none;
-  box-shadow: 0 0 0 3px #0369A120;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
-
----
-
-## Style Guidelines
-
-**Style:** Cyberpunk UI
-
-**Keywords:** Neon, dark mode, terminal, HUD, sci-fi, glitch, dystopian, futuristic, matrix, tech noir
-
-**Best For:** Gaming platforms, tech products, crypto apps, sci-fi applications, developer tools, entertainment
-
-**Key Effects:** Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts
-
-### Page Pattern
-
-**Pattern Name:** App Store Style Landing
-
-- **Conversion Strategy:** Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs.
-- **CTA Placement:** Download buttons prominent (App Store + Play Store) throughout
-- **Section Order:** 1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs
-
----
-
-## Anti-Patterns (Do NOT Use)
-
-- ❌ Light mode
-- ❌ Poor data viz
-
-### Additional Forbidden Patterns
-
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
-
----
-
-## Pre-Delivery Checklist
-
-Before delivering any UI code, verify:
-
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons from consistent icon set (Heroicons/Lucide)
-- [ ] `cursor-pointer` on all clickable elements
-- [ ] Hover states with smooth transitions (150-300ms)
-- [ ] Light mode: text contrast 4.5:1 minimum
-- [ ] Focus states visible for keyboard navigation
-- [ ] `prefers-reduced-motion` respected
-- [ ] Responsive: 375px, 768px, 1024px, 1440px
-- [ ] No content hidden behind fixed navbars
-- [ ] No horizontal scroll on mobile
+- Cyberpunk, glitch, scanline, Matrix, or terminal cosplay
+- Generic stock imagery or generated product screenshots
+- Decorative metric claims without evidence
+- Approval controls that imply ONEComputer can sign its own high-risk actions
+- Hidden focus states, hover-only information, and motion without a reduced mode

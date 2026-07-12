@@ -4,21 +4,29 @@ This is the public landing page for [ONEComputer](https://github.com/ONE-Compute
 an open-source governed AI computer forked from ONECli and built as a thin
 business layer over OpenVTC trust infrastructure.
 
-It is a static GitHub Pages site with no runtime secrets or build service. The
-visual system uses JetBrains Mono + IBM Plex Sans, a dark security-blue palette,
-inline SVG-free CSS primitives, accessible focus states, and reduced-motion
-support. `framer-motion` is included for future component work without making
-the public page dependent on a JavaScript runtime.
+The site is a Vite/React application deployed as static assets on GitHub Pages.
+It uses real captures from the deployed ONEComputer product, the product's
+Geist typography and UI tokens, and Framer Motion for scroll, state, and
+security-flow animation. Raw test identifiers are covered by presentation-layer
+labels; the source screenshots remain unchanged.
 
-## Local preview
+## Local development
 
 ```bash
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Then open `http://127.0.0.1:8080`.
+Then open the local URL printed by Vite.
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```
 
 ## Deployment
 
-The `pages.yml` workflow publishes the repository through GitHub Pages after a
-push to `main`.
+The `pages.yml` workflow builds `dist/` with Node 22 and deploys it through
+GitHub Pages after a push to `main`.
