@@ -1,191 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#07131f" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1f1e1d" />
     <meta
       name="description"
-      content="ONEComputer is an open-source governed AI computer, forked from ONECli and built on OpenVTC trust infrastructure."
+      content="ONEComputer is the open-source control plane for governed AI computers, policy enforcement, and external OpenVTC approvals."
     />
+    <meta property="og:title" content="ONEComputer · Governed AI computers" />
+    <meta
+      property="og:description"
+      content="Give AI agents real computers—with policy, external approval, and durable evidence built in."
+    />
+    <meta property="og:url" content="https://one-computer.github.io/" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://one-computer.github.io/" />
     <title>ONEComputer · Governed AI computers</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <div class="site-shell">
-      <header class="hero" id="top">
-        <div class="grid-glow" aria-hidden="true"></div>
-        <nav class="nav shell" aria-label="Primary navigation">
-          <a class="brand" href="#top" aria-label="ONEComputer home">
-            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>ONE<span class="brand-muted">Computer</span></span>
-          </a>
-          <div class="nav-links">
-            <a href="#architecture">Architecture</a>
-            <a href="#open-source">Open source</a>
-            <a href="https://github.com/ONE-Computer/onecomputer" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
-          <a class="button button-small" href="https://github.com/ONE-Computer/onecomputer" target="_blank" rel="noreferrer">
-            <span>Explore code</span><span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-
-        <div class="shell hero-grid">
-          <div class="hero-copy">
-            <div class="kicker"><span class="status-dot"></span> Open source · forked from ONECli</div>
-            <h1>Give AI a computer it can be trusted to use.</h1>
-            <p class="hero-lede">
-              ONEComputer turns capable AI agents into governed workers: isolated sandboxes,
-              policy-aware gateways, and human approvals that live outside the web app.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="https://github.com/ONE-Computer/onecomputer" target="_blank" rel="noreferrer">
-                <span>View the repository</span><span aria-hidden="true">↗</span>
-              </a>
-              <a class="button button-quiet" href="#architecture">See how it works <span aria-hidden="true">↓</span></a>
-            </div>
-            <div class="hero-meta" aria-label="Project attributes">
-              <span><b>01</b> business layer</span>
-              <span><b>02</b> trust boundary</span>
-              <span><b>03</b> open protocols</span>
-            </div>
-          </div>
-
-          <div class="terminal-card" aria-label="ONEComputer governed action flow">
-            <div class="terminal-topbar">
-              <span class="terminal-dots"><i></i><i></i><i></i></span>
-              <span class="terminal-title">onecomputer / governed-run</span>
-              <span class="terminal-live"><span class="status-dot"></span> LIVE</span>
-            </div>
-            <div class="terminal-body">
-              <div class="terminal-line muted"><span>$</span> onecomputer run --policy=company</div>
-              <div class="terminal-event"><span class="event-index">01</span><span class="event-dot blue"></span><span>Sandbox provisioned</span><strong>ok</strong></div>
-              <div class="terminal-event"><span class="event-index">02</span><span class="event-dot blue"></span><span>Claude action observed</span><strong>held</strong></div>
-              <div class="terminal-event"><span class="event-index">03</span><span class="event-dot amber"></span><span>Approval requested</span><strong>VTI wallet</strong></div>
-              <div class="terminal-event"><span class="event-index">04</span><span class="event-dot green"></span><span>Signed release received</span><strong>verified</strong></div>
-              <div class="terminal-divider"></div>
-              <div class="terminal-result"><span class="result-check">✓</span><div><b>Action released once</b><small>policy · hold · proof · release correlated</small></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="shell signal-bar" aria-label="Core components">
-          <span>Policy engine</span><i></i><span>Sandbox</span><i></i><span>Gateway</span><i></i><span>OpenVTC wallet</span><i></i><span>Audit trail</span>
-        </div>
-      </header>
-
-      <main>
-        <section class="section intro-section shell">
-          <div class="section-heading">
-            <p class="eyebrow">The problem</p>
-            <h2>AI can act. Your controls need to keep up.</h2>
-          </div>
-          <div class="intro-copy">
-            <p>
-              Modern agents can browse, code, call APIs, and change real systems. A login screen
-              is not a security boundary. ONEComputer gives each agent a real workspace while
-              making every consequential action observable, policy-checked, and releasable only
-              with the right proof.
-            </p>
-            <a class="arrow-link" href="#architecture">Follow the control path <span aria-hidden="true">→</span></a>
-          </div>
-        </section>
-
-        <section class="section architecture-section" id="architecture">
-          <div class="shell">
-            <div class="section-heading wide-heading">
-              <p class="eyebrow">Architecture</p>
-              <h2>One business experience. Two independent trust planes.</h2>
-              <p class="section-lede">ONEComputer owns the product workflow. OpenVTC owns identity, trust, and approval authority. The boundary is deliberate.</p>
-            </div>
-
-            <div class="plane-grid">
-              <article class="plane-card product-plane">
-                <div class="plane-head"><span class="plane-number">01</span><span class="plane-label">Product plane</span></div>
-                <h3>ONEComputer</h3>
-                <p>Where teams configure policy, launch sandboxes, and connect agents to governed work.</p>
-                <ul>
-                  <li><span>✓</span> Company-wide policy</li>
-                  <li><span>✓</span> Isolated AI computers</li>
-                  <li><span>✓</span> Gateway enforcement</li>
-                  <li><span>✓</span> Durable action holds</li>
-                </ul>
-              </article>
-              <div class="plane-join" aria-hidden="true"><span>+</span><small>thin integration</small></div>
-              <article class="plane-card trust-plane">
-                <div class="plane-head"><span class="plane-number">02</span><span class="plane-label">Trust plane</span></div>
-                <h3>OpenVTC</h3>
-                <p>Where identity, wallet custody, Trust Tasks, and signed human decisions are verified.</p>
-                <ul>
-                  <li><span>✓</span> Verifiable identity</li>
-                  <li><span>✓</span> External wallet custody</li>
-                  <li><span>✓</span> DIDComm / TSP delivery</li>
-                  <li><span>✓</span> Signed approval evidence</li>
-                </ul>
-              </article>
-            </div>
-
-            <div class="flow-track" aria-label="End-to-end action flow">
-              <div><span>01</span><b>Define</b><small>Admin policy</small></div><i>→</i>
-              <div><span>02</span><b>Run</b><small>Agent sandbox</small></div><i>→</i>
-              <div><span>03</span><b>Hold</b><small>Gateway intercept</small></div><i>→</i>
-              <div><span>04</span><b>Decide</b><small>Wallet approval</small></div><i>→</i>
-              <div><span>05</span><b>Release</b><small>One-time proof</small></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section boundary-section">
-          <div class="shell boundary-layout">
-            <div>
-              <p class="eyebrow">Security by construction</p>
-              <h2>Approval authority stays out of the app.</h2>
-              <p class="section-lede">The web UI can request and display status. It cannot impersonate the manager who approves a high-impact action.</p>
-            </div>
-            <div class="boundary-list">
-              <div><span class="list-number">01</span><div><b>External wallet</b><p>Signing keys remain in an OpenVTC wallet, isolated from the browser.</p></div></div>
-              <div><span class="list-number">02</span><div><b>Fail closed</b><p>Stale, altered, unauthorized, or replayed proofs never release an action.</p></div></div>
-              <div><span class="list-number">03</span><div><b>Evidence first</b><p>Policy, hold, task, proof, and release share one durable correlation trail.</p></div></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section repos-section" id="open-source">
-          <div class="shell">
-            <div class="section-heading wide-heading">
-              <p class="eyebrow">Open source boundary</p>
-              <h2>Small product surface. Composable trust infrastructure.</h2>
-              <p class="section-lede">ONEComputer is forked from ONECli and evolves as a business layer on top of open OpenVTC repositories. Each boundary stays independently auditable.</p>
-            </div>
-            <div class="repo-grid">
-              <a class="repo-card featured" href="https://github.com/ONE-Computer/onecomputer" target="_blank" rel="noreferrer"><span class="repo-type">Product</span><strong>ONEComputer</strong><small>Control plane, gateway, policy, sandbox, connector orchestration</small><em>View repository ↗</em></a>
-              <a class="repo-card" href="https://github.com/ONE-Computer/verifiable-trust-infrastructure" target="_blank" rel="noreferrer"><span class="repo-type">Trust plane</span><strong>VTI</strong><small>Identity, trust authority, Trust Tasks, and verification primitives</small><em>Explore fork ↗</em></a>
-              <a class="repo-card" href="https://github.com/ONE-Computer/vta-mobile-agent-ios" target="_blank" rel="noreferrer"><span class="repo-type">Wallet</span><strong>VTA Mobile Agent</strong><small>External wallet custody and signed human approval responses</small><em>Explore fork ↗</em></a>
-              <a class="repo-card" href="https://github.com/ONE-Computer/wiki" target="_blank" rel="noreferrer"><span class="repo-type">Docs</span><strong>OpenVTC Wiki</strong><small>Protocol context and the trust architecture behind the integration</small><em>Read the wiki ↗</em></a>
-            </div>
-          </div>
-        </section>
-
-        <section class="cta-section">
-          <div class="shell cta-card">
-            <div><p class="eyebrow">Build the governed path</p><h2>Make AI useful without making trust implicit.</h2></div>
-            <div class="cta-actions"><a class="button button-primary" href="https://github.com/ONE-Computer/onecomputer" target="_blank" rel="noreferrer">Start with GitHub <span aria-hidden="true">↗</span></a><a class="button button-outline" href="https://github.com/ONE-Computer" target="_blank" rel="noreferrer">See all repositories</a></div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer shell">
-        <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>ONE<span class="brand-muted">Computer</span></span></a>
-        <span>Open source governed AI computers · forked from ONECli</span>
-        <a href="https://github.com/ONE-Computer" target="_blank" rel="noreferrer">github.com/ONE-Computer ↗</a>
-      </footer>
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
