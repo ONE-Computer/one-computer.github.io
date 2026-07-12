@@ -1,8 +1,8 @@
 # Current status
 
-This page keeps the public docs honest. ONEComputer is under active integration work; the product direction is clear, but the complete production E2E is gated on the OpenVTC trust-plane path.
+This page distinguishes what works today from what still needs to be integrated. The product direction is clear, but the complete production journey still depends on the full OpenVTC approval path.
 
-## Working product surfaces
+## What works today
 
 - local OSS installer and rerunnable setup path;
 - Next.js web/API workspace;
@@ -12,7 +12,7 @@ This page keeps the public docs honest. ONEComputer is under active integration 
 - CISO console, policy, approval, and audit presentation surfaces;
 - deployment and runner tooling versioned with the application.
 
-## Open gates
+## What still needs to be completed
 
 - OpenVTC-native login as the production identity authority;
 - role projection from verified VMC/M-DID/VTC claims;
@@ -24,8 +24,8 @@ This page keeps the public docs honest. ONEComputer is under active integration 
 
 ## How to read “done”
 
-Do not mark a gate complete because a screen exists, a fixture passes, a local adapter returns success, or a manually seeded record appears in the UI. A gate is complete when the runtime behavior, security invariant, test, and evidence artifact agree.
+Do not call an item complete because a screen exists or a local test returns success. It is complete only when the real system behaves as intended, the security rule is enforced, the test passes, and the resulting record agrees.
 
 ## North star
 
-> Enterprises can give every team a secure Claude workspace while keeping identity, policy, approval authority, and evidence explicit—and OpenVTC remains the independent trust layer underneath.
+> Every employee can use the AI agent that fits their work in an isolated cloud computer, while company rules remain clear and important decisions stay with people through OpenVTC.

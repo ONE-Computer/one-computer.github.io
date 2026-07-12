@@ -56,8 +56,8 @@ const productSteps = [
   {
     id: "workspace",
     eyebrow: "01 · Work",
-    title: "Give teams a real Claude workspace in the cloud.",
-    body: "A browser-accessible computer with Claude Desktop and Claude Code already available—ready for work, isolated from the rest of the enterprise.",
+    title: "Give every employee a ready-to-use computer for AI work.",
+    body: "Open a private cloud desktop with Claude Desktop and Claude Code already available. People can begin working without installing agents or exposing their own machine.",
     image: "/screenshots/claude-desktop-sandbox.png",
     alt: "Remote Ubuntu cloud workspace with Claude Desktop and Claude Code Terminal available",
     kind: "workspace",
@@ -65,9 +65,9 @@ const productSteps = [
   },
   {
     id: "control",
-    eyebrow: "02 · Control",
-    title: "See every computer and agent from one live control plane.",
-    body: "Security teams get an org-wide view of running sandboxes, active agents, errors, and enforcement state—without entering the agent workspace.",
+    eyebrow: "02 · See",
+    title: "See where agents are running—and what they can reach.",
+    body: "IT and security teams can see active workspaces, connected agents, errors, and policy status without opening an employee's workspace.",
     image: "/screenshots/ciso-console.png",
     alt: "ONEComputer CISO Console showing sandbox and agent fleet status",
     kind: "ciso",
@@ -75,9 +75,9 @@ const productSteps = [
   },
   {
     id: "policy",
-    eyebrow: "03 · Govern",
-    title: "Set the company floor before an agent connects.",
-    body: "Default policy and scoped rules decide which traffic is allowed, denied, or sent to human review. Teams can add stricter controls, never weaker ones.",
+    eyebrow: "03 · Guide",
+    title: "Set clear rules before the work begins.",
+    body: "Company policy decides which data, tools, and destinations are allowed, blocked, or sent to a person for review. Teams can make those rules stricter, but not weaker.",
     image: "/screenshots/default-policy.png",
     alt: "ONEComputer company default policy screen",
     kind: "policy",
@@ -85,9 +85,9 @@ const productSteps = [
   },
   {
     id: "approve",
-    eyebrow: "04 · Verify",
-    title: "Keep the approval key outside ONEComputer.",
-    body: "Risky actions pause at the gateway. ONEComputer shows the hold, while the signed decision comes from a separate OpenVTC wallet and can be released only once.",
+    eyebrow: "04 · Decide",
+    title: "Keep important decisions with people.",
+    body: "When an action needs approval, ONEComputer pauses it. A manager reviews the exact request in a separate OpenVTC wallet, and only that signed decision can release it.",
     image: "/screenshots/approvals.png",
     alt: "ONEComputer approvals screen showing OpenVTC Wallet required",
     kind: "approvals",
@@ -99,53 +99,53 @@ const repositories = [
   {
     label: "Product",
     name: "onecomputer",
-    text: "Control plane, gateway, policies, sandboxes, and connector orchestration.",
+    text: "The application for people, policy, cloud workspaces, and agent access.",
     href: GITHUB,
   },
   {
-    label: "Trust plane",
+    label: "Trust infrastructure",
     name: "verifiable-trust-infrastructure",
-    text: "Identity, Trust Tasks, verification, and signed evidence primitives.",
+    text: "The open infrastructure for identity, secure requests, and signed decisions.",
     href: "https://github.com/ONE-Computer/verifiable-trust-infrastructure",
   },
   {
     label: "Wallet",
     name: "vta-mobile-agent-ios",
-    text: "External device custody and signed human approval responses.",
+    text: "A separate mobile wallet that keeps a person's key and signs their decision.",
     href: "https://github.com/ONE-Computer/vta-mobile-agent-ios",
   },
   {
     label: "Protocol docs",
     name: "OpenVTC wiki",
-    text: "The open trust architecture behind the ONEComputer integration.",
+    text: "The concepts, standards, and projects behind the OpenVTC ecosystem.",
     href: "https://github.com/OpenVTC/wiki",
   },
 ];
 
 const flowNodes = [
-  { label: "Admin policy", detail: "Define the floor", icon: SlidersHorizontal },
-  { label: "Agent computer", detail: "Run in isolation", icon: Cpu },
-  { label: "Gateway hold", detail: "Pause the action", icon: LockKeyhole },
-  { label: "VTI wallet", detail: "Sign externally", icon: WalletCards },
-  { label: "Verified release", detail: "Release once", icon: BadgeCheck },
+  { label: "Company policy", detail: "Set the rules", icon: SlidersHorizontal },
+  { label: "Private workspace", detail: "Let the agent work", icon: Cpu },
+  { label: "A careful pause", detail: "Hold what matters", icon: LockKeyhole },
+  { label: "Manager wallet", detail: "Review separately", icon: WalletCards },
+  { label: "Verified decision", detail: "Release only once", icon: BadgeCheck },
 ];
 
 const enterpriseJourneySteps = [
-  { role: "Enterprise admin", title: "Provision the organization", detail: "Connect the company, define ownership, and establish the governed workspace boundary.", icon: Building2 },
-  { role: "Enterprise admin", title: "Set the company floor", detail: "Define the controls no team can weaken: identity, network, data, tools, and approval thresholds.", icon: SlidersHorizontal },
-  { role: "Manager", title: "Add team policy", detail: "Narrow access for the team's data, repositories, connectors, and higher-risk actions.", icon: UsersRound },
-  { role: "Employee", title: "Start a sandbox", detail: "Launch an isolated computer with the approved agent, tools, and policy already attached.", icon: UserRound },
-  { role: "Agent", title: "Work inside the boundary", detail: "Claude, OpenClaw, Codex, or another agent can use permitted tools without touching the wider enterprise.", icon: Cpu },
-  { role: "Gateway", title: "Hold a consequential action", detail: "A risky request is frozen with its exact payload, policy snapshot, digest, and intended approver.", icon: LockKeyhole },
-  { role: "VTI wallet", title: "Review and sign", detail: "The manager sees the canonical request on a separate device and signs approval or denial with an external key.", icon: Smartphone },
-  { role: "ONEComputer", title: "Verify and release once", detail: "The gateway verifies identity, signature, expiry, digest, and replay state before one-time release.", icon: BadgeCheck },
+  { role: "Company admin", title: "Create the company workspace", detail: "Connect the organization, choose its owners, and give teams one place to launch secure AI workspaces.", icon: Building2 },
+  { role: "Company admin", title: "Set the rules everyone inherits", detail: "Decide which data, tools, networks, and actions are acceptable across the company.", icon: SlidersHorizontal },
+  { role: "Manager", title: "Tailor the rules for the team", detail: "Add tighter controls for the team's repositories, customer data, connectors, and higher-risk work.", icon: UsersRound },
+  { role: "Employee", title: "Open a private sandbox", detail: "Launch a cloud computer with the approved agent, tools, and company rules already in place.", icon: UserRound },
+  { role: "Agent", title: "Do useful work", detail: "Claude, OpenClaw, Codex, or another agent can use approved tools without gaining access to the wider enterprise.", icon: Cpu },
+  { role: "ONEComputer", title: "Pause what needs a person", detail: "If an action crosses policy, ONEComputer holds the exact request and asks the right manager to decide.", icon: LockKeyhole },
+  { role: "Manager", title: "Review it on a separate device", detail: "The manager sees what the agent wants to do, why it was held, and signs approval or denial in their wallet.", icon: Smartphone },
+  { role: "ONEComputer", title: "Release only what was approved", detail: "ONEComputer checks the signer and the exact request, then releases it once—or keeps it blocked.", icon: BadgeCheck },
 ];
 
 const enterpriseIntegrations = [
-  { name: "Microsoft Purview DLP", label: "Data controls", text: "Bring sensitive-information classification and data movement rules to the workspace boundary.", icon: Database },
-  { name: "Microsoft Intune", label: "Device posture", text: "Use managed-device and compliance signals when deciding who can enter governed workspaces.", icon: Smartphone },
-  { name: "SIEM · OpenTelemetry", label: "Security evidence", text: "Export holds, policy decisions, verified releases, and runtime events into enterprise monitoring.", icon: ScanLine },
-  { name: "EDR · network controls", label: "Runtime defense", text: "Connect endpoint risk, egress policy, and incident response without coupling them to one agent vendor.", icon: PlugZap },
+  { name: "Microsoft Purview DLP", label: "Protect sensitive data", text: "Use the classifications and data-movement rules your security team already maintains.", icon: Database },
+  { name: "Microsoft Intune", label: "Check device health", text: "Bring managed-device and compliance signals into decisions about workspace access.", icon: Smartphone },
+  { name: "SIEM · OpenTelemetry", label: "See what happened", text: "Send policy decisions, held actions, approvals, and workspace events to your monitoring tools.", icon: ScanLine },
+  { name: "EDR · network controls", label: "Respond with context", text: "Use endpoint risk and network policy without tying your security program to one AI agent.", icon: PlugZap },
 ];
 
 const reveal = {
@@ -313,7 +313,7 @@ function ProductCapture({ step, hero = false, agent = null }) {
           {step.kind === "approvals" && (
             <>
               <span className="redaction approval-r1">Send customer update</span>
-              <span className="redaction approval-r2">Export governed report</span>
+              <span className="redaction approval-r2">Export customer report</span>
               <span className="redaction approval-r3">Change production workflow</span>
             </>
           )}
@@ -386,7 +386,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
           >
-            <span className="live-dot" /> Open source · forked from ONECli
+            <span className="live-dot" /> Open source · built from ONECli
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 26 }}
@@ -405,10 +405,10 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.38, duration: 0.7 }}
           >
-            Give your enterprise one governed cloud runtime for the agent stack
-            your teams choose. ONEComputer combines isolated workspaces,
-            inherited company policy, and externally verifiable human
-            approvals—without forcing one agent vendor on the business.
+            AI agents are most useful when they can work with files, tools, and
+            the web. ONEComputer gives each employee an isolated cloud workspace
+            where agents can do real work, while company policy and human
+            approval stay in control.
           </motion.p>
           <motion.div
             className="hero-actions"
@@ -422,7 +422,7 @@ function Hero() {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              See the six-part story <ArrowDown size={15} />
+              Explore the product <ArrowDown size={15} />
             </motion.a>
             <motion.a
               className="button button-quiet"
@@ -491,10 +491,10 @@ function Hero() {
       </div>
 
       <div className="shell trust-strip" aria-label="ONEComputer capabilities">
-        <span><Server size={15} /> Agent workspaces</span>
-        <span><ShieldCheck size={15} /> Policy gateway</span>
-        <span><WalletCards size={15} /> External approval</span>
-        <span><FileCheck2 size={15} /> Audit evidence</span>
+        <span><Server size={15} /> Isolated workspaces</span>
+        <span><ShieldCheck size={15} /> Company-wide policy</span>
+        <span><WalletCards size={15} /> Approvals outside the app</span>
+        <span><FileCheck2 size={15} /> A clear audit trail</span>
       </div>
     </section>
   );
@@ -519,12 +519,12 @@ function ProductTour() {
     <section className="section product-section" id="product">
       <div className="shell">
         <Reveal className="section-intro">
-          <p className="eyebrow">Real product · deployed on Azure</p>
-          <h2>One control plane for every agent surface.</h2>
+          <p className="eyebrow">Built and running on Azure</p>
+          <h2>One place to give every team a safe workspace.</h2>
           <p>
-            These are live ONEComputer product surfaces—not concept art. The
-            screenshots use Claude as one concrete workspace; the control,
-            policy, hold, and evidence model is designed to stay agent-agnostic.
+            The screens below come from the working product. We use Claude in
+            the example workspace, but the same approach is designed for
+            OpenClaw, Codex, Hermes Agent, and the tools teams choose next.
           </p>
         </Reveal>
 
@@ -581,9 +581,9 @@ function ProductTour() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <span><span className="live-dot" /> Captured from the deployed cloud build</span>
+              <span><span className="live-dot" /> From the current cloud build</span>
               <a href={`${CLOUD}/${activeStep.id === "workspace" || activeStep.id === "control" ? "console" : activeStep.id === "policy" ? "settings/policy" : "approvals"}`} target="_blank" rel="noreferrer">
-                Open surface <ArrowUpRight size={13} />
+                Open this view <ArrowUpRight size={13} />
               </a>
             </motion.div>
           </div>
@@ -605,13 +605,12 @@ function AgentCoverage() {
     <section className="section agent-section" id="agents">
       <div className="shell">
         <Reveal className="section-intro narrow">
-          <p className="eyebrow">Agent-agnostic by design</p>
-          <h2>Bring your agent stack. Keep one security plane.</h2>
+          <p className="eyebrow">Choose the agent that fits the work</p>
+          <h2>Your security model should outlast your agent stack.</h2>
           <p>
-            Claude, NanoClaw, OpenClaw, Codex, Hermes Agent, and the next
-            runtime your team adopts should not each require a new security
-            operating model. ONEComputer gives them the same governed place to
-            work.
+            Different teams will choose different agents—and those choices will
+            change. ONEComputer gives them a consistent place to work, with the
+            same company rules and approval process around each one.
           </p>
         </Reveal>
 
@@ -620,25 +619,25 @@ function AgentCoverage() {
             <div className="agent-command-grid" aria-hidden="true" />
             <span className="agent-command-orbit agent-command-orbit-one" />
             <span className="agent-command-orbit agent-command-orbit-two" />
-            <span className="agent-command-status"><i /> Runtime boundary active</span>
+            <span className="agent-command-status"><i /> Workspace protected</span>
             <span className="agent-command-label">Safe place for</span>
             <div className="agent-command-name"><AgentRotator /></div>
-            <span className="agent-command-caption">same workspace · same policy · same evidence</span>
+            <span className="agent-command-caption">one workspace · one set of rules · one audit trail</span>
           </Reveal>
           <Reveal className="agent-command-copy" delay={0.12}>
-            <p className="eyebrow">No vendor lock-in at the boundary</p>
-            <h3>Adopt faster without multiplying risk.</h3>
+            <p className="eyebrow">Built to stay open</p>
+            <h3>Change the agent, not your security architecture.</h3>
             <p>
-              The agent can change. Your policy, isolation, approval authority,
-              and audit trail do not have to. Connect the surface your teams
-              need while ONEComputer keeps the operating boundary consistent.
+              Your teams can adopt a new agent without starting security review
+              from zero. The workspace, company policy, human approvals, and
+              evidence stay familiar.
             </p>
             <div className="agent-command-points">
-              <span><Check size={14} /> One cloud computer model</span>
-              <span><Check size={14} /> One policy gateway</span>
-              <span><Check size={14} /> One external trust boundary</span>
+              <span><Check size={14} /> An isolated computer for each user</span>
+              <span><Check size={14} /> Rules that follow the work</span>
+              <span><Check size={14} /> Human approval for sensitive actions</span>
             </div>
-            <a className="inline-link" href="/agents/">Explore agent workspaces <ArrowRight size={14} /></a>
+            <a className="inline-link" href="/agents/">See supported agents <ArrowRight size={14} /></a>
           </Reveal>
         </div>
 
@@ -683,26 +682,26 @@ function EnterpriseStory() {
             <div className="workspace-callout workspace-callout-two"><Cpu size={14} /> Claude Code</div>
             <div className="workspace-inset">
               <img src="/screenshots/claude-desktop-welcome.png" alt="Claude Desktop running inside the ONEComputer sandbox" loading="lazy" />
-              <span><Monitor size={12} /> Claude Desktop · governed gateway</span>
+              <span><Monitor size={12} /> Claude Desktop · company rules applied</span>
             </div>
           </div>
         </Reveal>
 
         <Reveal className="enterprise-copy" delay={0.12}>
-          <p className="eyebrow">The enterprise path to agentic work</p>
-          <h2>Give teams their agents. Give security a boundary.</h2>
+          <p className="eyebrow">Bring agents to work responsibly</p>
+          <h2>Give people room to explore. Give security the controls it needs.</h2>
           <p>
-            A chat window is not an operating model. ONEComputer gives every
-            agent a controlled computer where it can work with files, tools,
-            and context—while the company keeps the controls that make
-            adoption responsible.
+            ONEComputer gives each employee a private computer where AI can
+            work with files, tools, and context. Admins set the company rules,
+            managers can make them stricter, and employees can focus on the
+            work instead of configuring infrastructure.
           </p>
           <div className="enterprise-points">
-            <div><span><Server size={16} /></span><p><b>Provision in minutes</b><small>Spin up an isolated workspace from the control plane.</small></p></div>
-            <div><span><ShieldCheck size={16} /></span><p><b>Inherit policy by role</b><small>Enterprise admins set the floor; managers narrow it; employees launch inside it.</small></p></div>
-            <div><span><FileCheck2 size={16} /></span><p><b>Leave an evidence trail</b><small>Connect holds, approvals, releases, and runtime activity.</small></p></div>
+            <div><span><Server size={16} /></span><p><b>Ready when people need it</b><small>Launch an isolated workspace without setting up a local machine.</small></p></div>
+            <div><span><ShieldCheck size={16} /></span><p><b>Clear rules at every level</b><small>Company policy applies everywhere; managers can add stricter controls for their team.</small></p></div>
+            <div><span><FileCheck2 size={16} /></span><p><b>A record people can understand</b><small>See why work was held, who approved it, and what happened next.</small></p></div>
           </div>
-          <a className="inline-link" href="#security">See how the boundary works <ArrowRight size={14} /></a>
+          <a className="inline-link" href="#security">Follow the employee journey <ArrowRight size={14} /></a>
         </Reveal>
       </div>
     </section>
@@ -714,12 +713,13 @@ function SecurityFlow() {
     <section className="section flow-section" id="security">
       <div className="shell">
         <Reveal className="section-intro narrow">
-          <p className="eyebrow">Security by separation</p>
-          <h2>Let the agent move fast. Keep authority outside the app.</h2>
+          <p className="eyebrow">Keep consequential decisions human</p>
+          <h2>Agents can move quickly without holding the keys.</h2>
           <p>
-            ONEComputer owns the business workflow and runtime boundary.
-            OpenVTC owns identity, wallet custody, Trust Tasks, and the signed
-            decision. That separation is the feature.
+            ONEComputer runs the workspace and applies company rules. When an
+            action needs a person, it pauses the request and sends it to a
+            separate OpenVTC wallet. The manager's signed decision—not a button
+            in the portal—determines what happens next.
           </p>
         </Reveal>
 
@@ -759,28 +759,28 @@ function SecurityFlow() {
         <div className="boundary-grid">
           <Reveal className="boundary-card">
             <span className="boundary-icon"><Cpu size={20} /></span>
-            <p className="eyebrow">ONEComputer control plane</p>
-            <h3>Run the work.</h3>
-            <p>Users, company policy, cloud computers, agents, connectors, gateway holds, and correlated audit state.</p>
+            <p className="eyebrow">What ONEComputer does</p>
+            <h3>Creates a safe place to work.</h3>
+            <p>It manages people, policy, cloud workspaces, connected agents, and the moments where work must pause.</p>
             <ul>
-              <li><Check size={14} /> Business workflow</li>
-              <li><Check size={14} /> Runtime enforcement</li>
-              <li><Check size={14} /> Durable holds</li>
+              <li><Check size={14} /> Company and team workflow</li>
+              <li><Check size={14} /> Rules enforced at the workspace</li>
+              <li><Check size={14} /> Requests stay held until resolved</li>
             </ul>
           </Reveal>
           <Reveal className="boundary-card boundary-card-trust" delay={0.12}>
             <span className="boundary-icon"><Network size={20} /></span>
-            <p className="eyebrow">OpenVTC trust plane</p>
-            <h3>Prove the decision.</h3>
-            <p>Verifiable identity, external key custody, DIDComm delivery, signed approval evidence, and replay resistance.</p>
+            <p className="eyebrow">What OpenVTC does</p>
+            <h3>Makes the decision independently verifiable.</h3>
+            <p>It connects the request to a known person, keeps their signing key elsewhere, and returns proof tied to that exact action.</p>
             <ul>
-              <li><Check size={14} /> External wallet</li>
-              <li><Check size={14} /> Signed Trust Tasks</li>
-              <li><Check size={14} /> One-time release proof</li>
+              <li><Check size={14} /> A separate wallet</li>
+              <li><Check size={14} /> A signed request and response</li>
+              <li><Check size={14} /> Protection against reuse</li>
             </ul>
           </Reveal>
         </div>
-        <a className="inline-link flow-link" href="/security/">Read the security model <ArrowRight size={14} /></a>
+        <a className="inline-link flow-link" href="/security/">See how approvals work <ArrowRight size={14} /></a>
       </div>
     </section>
   );
@@ -792,21 +792,21 @@ function OpenSource() {
       <div className="shell">
         <div className="open-heading">
           <Reveal>
-            <p className="eyebrow">Open source by design</p>
-            <h2>Enterprise control. Open foundations.</h2>
+            <p className="eyebrow">Open source, from workspace to wallet</p>
+            <h2>Inspect it. Run it. Help shape it.</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p>
-              ONEComputer is forked from ONECli and evolves as the business
-              application over OpenVTC. The stack stays open at the trust
-              boundary, while teams get a practical control plane for running
-              their chosen agents securely in their own cloud.
+              ONEComputer began as a fork of ONECli and is being built in the
+              open as the workplace layer over OpenVTC. You can follow the code
+              from the employee workspace to the policy gateway and the
+              external wallet—and run the stack in your own cloud.
             </p>
             <a className="inline-link" href={GITHUB} target="_blank" rel="noreferrer">
-              Explore the organization <ArrowUpRight size={14} />
+              Explore the code <ArrowUpRight size={14} />
             </a>
             <a className="inline-link" href={DOCS}>
-              Read the architecture docs <ArrowRight size={14} />
+              Read how the pieces fit <ArrowRight size={14} />
             </a>
           </Reveal>
         </div>
@@ -828,7 +828,7 @@ function OpenSource() {
               <span className="repo-top"><GitFork size={16} /> {repo.label}</span>
               <strong>{repo.name}</strong>
               <p>{repo.text}</p>
-              <span className="repo-link">View repository <ArrowUpRight size={13} /></span>
+              <span className="repo-link">Open repository <ArrowUpRight size={13} /></span>
             </motion.a>
           ))}
         </div>
@@ -854,21 +854,21 @@ function FinalCta() {
           aria-hidden="true"
         />
         <div>
-          <p className="eyebrow">Build the governed path</p>
-          <h2>Give teams their agents.<br />Keep the boundary human.</h2>
+          <p className="eyebrow">A practical path to agentic work</p>
+          <h2>Let teams move faster—<br />with limits everyone can understand.</h2>
         </div>
         <div className="cta-actions">
           <motion.a className="button button-brand" href={GITHUB} target="_blank" rel="noreferrer" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-            <Github size={16} /> View on GitHub <ArrowUpRight size={14} />
+            <Github size={16} /> Explore on GitHub <ArrowUpRight size={14} />
           </motion.a>
           <motion.a className="button button-quiet" href={CLOUD} target="_blank" rel="noreferrer" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-            Open cloud demo <ArrowUpRight size={14} />
+            Try the cloud build <ArrowUpRight size={14} />
           </motion.a>
           <motion.a className="button button-quiet" href={DOCS} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
             Read the docs <ArrowRight size={14} />
           </motion.a>
           <motion.a className="button button-quiet" href="/getting-started/" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-            Get started <ArrowRight size={14} />
+            Install locally <ArrowRight size={14} />
           </motion.a>
         </div>
       </motion.div>
@@ -880,7 +880,7 @@ function SiteFooter() {
   return (
     <footer className="shell footer">
       <Logo />
-      <span>Open-source governed AI computers · forked from ONECli</span>
+      <span>Open-source workspaces for safer agentic work · built from ONECli</span>
       <a href="https://github.com/ONE-Computer" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a>
     </footer>
   );
@@ -939,9 +939,9 @@ function ScreenshotGrid({ steps }) {
 function TrustFoundationVisual() {
   const reduceMotion = useReducedMotion();
   const nodes = [
-    { label: "Agent request", detail: "Exact action", icon: Cpu },
-    { label: "OpenVTC / VTI", detail: "Identity + proof", icon: Network },
-    { label: "External wallet", detail: "Human key", icon: Smartphone },
+    { label: "Agent request", detail: "What it wants to do", icon: Cpu },
+    { label: "OpenVTC / VTI", detail: "Carries and checks", icon: Network },
+    { label: "Manager wallet", detail: "Makes the decision", icon: Smartphone },
   ];
 
   return (
@@ -980,22 +980,22 @@ function TrustFoundationVisual() {
         animate={reduceMotion ? undefined : { left: ["8%", "48%", "88%", "48%", "8%"], opacity: [0, 1, 1, 1, 0] }}
         transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="trust-foundation-proof"><Fingerprint size={16} /><span><small>Verified authority</small><b>Signer · task · expiry · digest</b></span></div>
+      <div className="trust-foundation-proof"><Fingerprint size={16} /><span><small>Decision verified</small><b>Person · request · expiry · signature</b></span></div>
     </div>
   );
 }
 
 function AgentSecurityPrimer() {
   const risks = [
-    ["The agent can misunderstand", "Autonomy means the model decides how to pursue a goal. It can take a path the user did not intend."],
-    ["External content can attack it", "Files, websites, messages, and tools can contain instructions designed to redirect the agent."],
-    ["Every tool expands the blast radius", "The more data and systems an agent can reach, the more consequential one mistake or compromise becomes."],
+    ["Agents can take an unexpected path", "An agent chooses how to pursue a goal. Even with good intent, it can do something the user did not expect."],
+    ["Anything an agent reads can influence it", "A document, website, message, or tool result can contain instructions designed to redirect the agent."],
+    ["More access means more can go wrong", "Every file, credential, system, and network destination increases the consequences of a mistake or compromise."],
   ];
 
   const layers = [
-    ["Contain the environment", "ONEComputer isolates the agent, its files, tools, credentials, and network reach."],
-    ["Make policy explicit", "Company and team rules decide what is allowed, denied, logged, or held for review."],
-    ["Prove human authority", "OpenVTC keeps identity and signing keys outside the app, then returns verifiable evidence."],
+    ["Limit what the workspace can reach", "ONEComputer separates each agent from the employee's device and from systems the work does not need."],
+    ["Turn company expectations into clear rules", "Admins decide what is allowed, blocked, recorded, or sent to a person before work begins."],
+    ["Ask people to confirm the moments that matter", "OpenVTC keeps the final decision and signing key outside the application requesting permission."],
   ];
 
   return (
@@ -1003,13 +1003,13 @@ function AgentSecurityPrimer() {
       <div className="shell">
         <Reveal className="section-intro openvtc-intro">
           <p className="eyebrow">Start with the security problem</p>
-          <h2>A safe model is not a complete security boundary.</h2>
-          <p>An agent is a model connected to tools, data, and an environment. The useful part is that it can act. The hard part is deciding what it may reach—and proving who authorized the actions that matter.</p>
+          <h2>A safe model still needs a safe place to work.</h2>
+          <p>Models matter, but an agent's tools, data, and environment determine what it can actually do. We designed ONEComputer around a simple question: how can people benefit from capable agents without giving them more access than the work requires?</p>
         </Reveal>
 
         <div className="security-primer-grid">
           <Reveal className="security-primer-column">
-            <p className="security-primer-kicker"><BellRing size={15} /> Why agentic work changes risk</p>
+            <p className="security-primer-kicker"><BellRing size={15} /> Why agents need a different approach</p>
             {risks.map(([title, text], index) => (
               <motion.div className="security-primer-card is-risk" key={title} whileHover={{ x: 5 }} transition={{ duration: 0.18 }}>
                 <span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div>
@@ -1017,14 +1017,14 @@ function AgentSecurityPrimer() {
             ))}
           </Reveal>
           <Reveal className="security-primer-equation" delay={0.08}>
-            <p className="eyebrow">The ONEComputer model</p>
-            <div className="security-equation-row"><span><Server size={17} /> Contained runtime</span><i>+</i></div>
-            <div className="security-equation-row"><span><SlidersHorizontal size={17} /> Explicit policy</span><i>+</i></div>
-            <div className="security-equation-row"><span><Fingerprint size={17} /> Verifiable authority</span><i>=</i></div>
-            <div className="security-equation-result"><ShieldCheck size={21} /><b>Useful autonomy<br />with bounded risk</b></div>
+            <p className="eyebrow">A layered approach</p>
+            <div className="security-equation-row"><span><Server size={17} /> A safe place to work</span><i>+</i></div>
+            <div className="security-equation-row"><span><SlidersHorizontal size={17} /> Clear company rules</span><i>+</i></div>
+            <div className="security-equation-row"><span><Fingerprint size={17} /> A human decision you can verify</span><i>=</i></div>
+            <div className="security-equation-result"><ShieldCheck size={21} /><b>AI people can use<br />with confidence</b></div>
           </Reveal>
           <Reveal className="security-primer-column" delay={0.16}>
-            <p className="security-primer-kicker"><ShieldCheck size={15} /> The layered response</p>
+            <p className="security-primer-kicker"><ShieldCheck size={15} /> How ONEComputer responds</p>
             {layers.map(([title, text], index) => (
               <motion.div className="security-primer-card is-control" key={title} whileHover={{ x: -5 }} transition={{ duration: 0.18 }}>
                 <span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div>
@@ -1035,16 +1035,16 @@ function AgentSecurityPrimer() {
 
         <div className="openvtc-definition">
           <Reveal>
-            <p className="eyebrow">OpenVTC, from first principles</p>
-            <h2>It is an independent trust foundation—not another approval button.</h2>
+            <p className="eyebrow">Where OpenVTC fits</p>
+            <h2>OpenVTC gives important decisions a source you can verify.</h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p>OpenVTC is an open ecosystem for verifiable identity and trust relationships. VTI is the infrastructure that carries those identities, encrypted messages, and signed tasks. A VTA wallet keeps the person’s private key outside ONEComputer.</p>
-            <p>For ONEComputer, the practical outcome is simple: the application can ask for authority, but it cannot manufacture authority for itself.</p>
+            <p>OpenVTC is an open ecosystem for digital identity and trust. VTI carries secure requests and checks signed responses. A VTA wallet keeps the person's private key on a separate device.</p>
+            <p>Together, they let ONEComputer ask for approval without being able to approve its own request.</p>
             <div className="openvtc-terms">
-              <span><b>OpenVTC</b><small>The trust ecosystem and community model</small></span>
-              <span><b>VTI</b><small>The verifiable trust infrastructure</small></span>
-              <span><b>VTA wallet</b><small>The personal key holder and signer</small></span>
+              <span><b>OpenVTC</b><small>The open trust ecosystem</small></span>
+              <span><b>VTI</b><small>The services that carry and verify trust</small></span>
+              <span><b>VTA wallet</b><small>The app that keeps a person's key</small></span>
             </div>
           </Reveal>
         </div>
@@ -1065,28 +1065,28 @@ function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
 
   return (
     <div className="wallet-demo-wrap">
-      <div className="wallet-demo-label"><span><i /> Illustrative VTI wallet</span><small>Separate device · separate key</small></div>
+      <div className="wallet-demo-label"><span><i /> Interactive wallet example</span><small>Separate device · separate key</small></div>
       <motion.div className="wallet-phone" animate={reduceMotion ? undefined : { y: [0, -5, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}>
         <div className="wallet-phone-status"><span>9:41</span><span>● ● ●</span></div>
-        <div className="wallet-phone-header"><span><Fingerprint size={16} /></span><div><b>VTI Wallet</b><small>Manager identity verified</small></div><CircleCheck size={16} /></div>
+        <div className="wallet-phone-header"><span><Fingerprint size={16} /></span><div><b>VTI Wallet</b><small>Manager identity ready</small></div><CircleCheck size={16} /></div>
         <AnimatePresence mode="wait">
           {!available && decision === "pending" ? (
             <motion.div className="wallet-idle" key="idle" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
               <motion.span animate={reduceMotion ? undefined : { scale: [1, 1.06, 1] }} transition={{ duration: 3, repeat: Infinity }}><Fingerprint size={27} /></motion.span>
-              <p className="eyebrow">Trust agent ready</p>
-              <h3>No pending requests</h3>
-              <p>The wallet is listening for an encrypted Trust Task. Push notifications only wake the app; the signed request is retrieved through the trusted channel.</p>
-              <div className="wallet-idle-status"><i /><span><small>Secure channel</small><b>Connected</b></span></div>
+              <p className="eyebrow">Ready when needed</p>
+              <h3>Nothing needs your attention</h3>
+              <p>When ONEComputer needs your decision, the wallet retrieves the signed request through its secure connection. A notification only tells the app to check.</p>
+              <div className="wallet-idle-status"><i /><span><small>Secure connection</small><b>Listening</b></span></div>
             </motion.div>
           ) : decision === "pending" ? (
             <motion.div className="wallet-request" key="pending" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
               <div className="wallet-request-icon"><BellRing size={20} /></div>
-              <p className="eyebrow">Approval requested</p>
+              <p className="eyebrow">ONEComputer needs a decision</p>
               <h3>Export customer report</h3>
-              <p>Claude Code wants to send a file classified as sensitive to an external destination.</p>
+              <p>Claude Code wants to send a sensitive file outside the company workspace.</p>
               <div className="wallet-request-facts">
-                <span><small>Requested by</small><b>Research sandbox</b></span>
-                <span><small>Policy</small><b>Manager approval</b></span>
+                <span><small>Requested by</small><b>Research team workspace</b></span>
+                <span><small>Policy</small><b>A manager must approve</b></span>
                 <span><small>Task digest</small><code>8F2A…9C11</code></span>
                 <span><small>Expires</small><b>4 minutes</b></span>
               </div>
@@ -1100,11 +1100,11 @@ function VtiWalletMock({ available, decision, onApprove, onDeny, onReset }) {
               <motion.span initial={{ scale: 0.7 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 220 }}>
                 {decision === "approved" ? <BadgeCheck size={30} /> : <X size={30} />}
               </motion.span>
-              <p className="eyebrow">Signed response</p>
+              <p className="eyebrow">Decision signed</p>
               <h3>{decision === "approved" ? "Approval signed" : "Request denied"}</h3>
-              <p>The wallet signed the exact task digest. ONEComputer can verify this response but cannot alter it.</p>
+              <p>The wallet signed this exact request. ONEComputer can verify the decision, but it cannot change it.</p>
               <div className="wallet-signature"><KeyRound size={14} /><code>did:webvh:manager • ed25519</code></div>
-              <button type="button" className="wallet-reset" onClick={onReset}>Run the demo again</button>
+              <button type="button" className="wallet-reset" onClick={onReset}>Try another decision</button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1136,9 +1136,9 @@ function EnterpriseJourney({ id = "journey" }) {
     <section className="section enterprise-journey" id={id}>
       <div className="shell">
         <Reveal className="section-intro enterprise-journey-intro">
-          <p className="eyebrow">The enterprise journey</p>
-          <h2>Set the boundary once. Let every team work inside it.</h2>
-          <p>Policy flows from the enterprise to the team to the workspace. Routine work stays fast. Consequential actions cross an independent trust boundary before release.</p>
+          <p className="eyebrow">How work moves through ONEComputer</p>
+          <h2>From a company rule to a safe agent action.</h2>
+          <p>Admins set the baseline. Managers adapt it for their teams. Employees work inside those rules, and sensitive actions pause for a decision in a separate wallet.</p>
         </Reveal>
 
         <div className="journey-timeline" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
@@ -1173,21 +1173,21 @@ function EnterpriseJourney({ id = "journey" }) {
             </AnimatePresence>
 
             <div className="policy-inheritance">
-              <motion.div className="policy-layer company-layer" animate={{ x: active >= 1 ? 0 : -5, opacity: active >= 1 ? 1 : 0.55 }}><Building2 size={14} /><span><small>Company floor</small><b>No public data export</b></span><Check size={13} /></motion.div>
-              <motion.div className="policy-layer manager-layer" animate={{ x: active >= 2 ? 0 : -5, opacity: active >= 2 ? 1 : 0.45 }}><UsersRound size={14} /><span><small>Team overlay</small><b>Manager signs sensitive actions</b></span><Check size={13} /></motion.div>
-              <motion.div className="policy-layer employee-layer" animate={{ x: active >= 3 ? 0 : -5, opacity: active >= 3 ? 1 : 0.35 }}><Monitor size={14} /><span><small>Workspace policy</small><b>Claude · isolated · policy attached</b></span><Check size={13} /></motion.div>
+              <motion.div className="policy-layer company-layer" animate={{ x: active >= 1 ? 0 : -5, opacity: active >= 1 ? 1 : 0.55 }}><Building2 size={14} /><span><small>Company rule</small><b>Sensitive data stays private</b></span><Check size={13} /></motion.div>
+              <motion.div className="policy-layer manager-layer" animate={{ x: active >= 2 ? 0 : -5, opacity: active >= 2 ? 1 : 0.45 }}><UsersRound size={14} /><span><small>Team rule</small><b>A manager reviews external sharing</b></span><Check size={13} /></motion.div>
+              <motion.div className="policy-layer employee-layer" animate={{ x: active >= 3 ? 0 : -5, opacity: active >= 3 ? 1 : 0.35 }}><Monitor size={14} /><span><small>Workspace</small><b>Claude · isolated · rules applied</b></span><Check size={13} /></motion.div>
             </div>
 
             <div className={`gateway-event ${decision !== "pending" ? `is-${decision}` : ""}`}>
               <span className="gateway-event-icon">{decision === "approved" ? <BadgeCheck size={18} /> : decision === "denied" ? <X size={18} /> : <LockKeyhole size={18} />}</span>
-              <div><small>Gateway state</small><b>{decision === "approved" ? "Signed proof verified · released once" : decision === "denied" ? "Signed denial verified · remains blocked" : active >= 5 ? "Action held · waiting for external proof" : "Monitoring permitted work"}</b></div>
+              <div><small>Gateway state</small><b>{decision === "approved" ? "Approval verified · action released once" : decision === "denied" ? "Denial verified · action stays blocked" : active >= 5 ? "Request paused · waiting for the manager" : "Routine work continues"}</b></div>
               <code>8F2A…9C11</code>
             </div>
           </div>
 
           <div className="journey-trust-link" aria-hidden="true">
             <motion.span animate={reduceMotion ? undefined : { y: ["8%", "84%", "8%"] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
-            <small><Send size={13} /> encrypted Trust Task</small>
+            <small><Send size={13} /> encrypted request</small>
           </div>
 
           <VtiWalletMock available={active >= 5} decision={decision} onApprove={approve} onDeny={deny} onReset={reset} />
@@ -1202,16 +1202,16 @@ function EnterpriseIntegrations() {
     <section className="section integration-section">
       <div className="shell">
         <Reveal className="section-intro">
-          <p className="eyebrow">Designed for the enterprise security stack</p>
-          <h2>Keep the controls you already operate.</h2>
-          <p>ONEComputer is the workspace and enforcement layer. The roadmap is to consume signals from existing data, device, endpoint, and monitoring systems—without making any one vendor the agent runtime.</p>
+          <p className="eyebrow">Works with the security tools you already have</p>
+          <h2>ONEComputer should fit your controls—not ask you to replace them.</h2>
+          <p>We are designing clear connections to the data, device, endpoint, and monitoring systems enterprises already operate. These integrations are on the roadmap and are not yet part of the production release.</p>
         </Reveal>
         <div className="integration-grid">
           {enterpriseIntegrations.map((integration, index) => {
             const Icon = integration.icon;
             return (
               <motion.div className="integration-card" key={integration.name} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.07 }} whileHover={{ y: -5 }}>
-                <div className="integration-card-top"><span><Icon size={17} /></span><small>Coming soon</small></div>
+                <div className="integration-card-top"><span><Icon size={17} /></span><small>Planned</small></div>
                 <p className="eyebrow">{integration.label}</p>
                 <h3>{integration.name}</h3>
                 <p>{integration.text}</p>
@@ -1219,7 +1219,7 @@ function EnterpriseIntegrations() {
             );
           })}
         </div>
-        <div className="integration-note"><Layers3 size={16} /><span><b>Integration principle</b> Consume posture and policy signals at explicit seams. Keep OpenVTC as the authority for verifiable identity and signed human decisions.</span></div>
+        <div className="integration-note"><Layers3 size={16} /><span><b>Our approach</b> Use existing security signals where they are strongest, while OpenVTC remains responsible for identity and signed human decisions.</span></div>
       </div>
     </section>
   );
@@ -1231,7 +1231,7 @@ function AgentsSubpage() {
       <SubpageHero
         eyebrow="Agent workspaces"
         title={<>A safe computer for <span><AgentRotator /></span>.</>}
-        body="Give teams a governed place to run the agent they choose. ONEComputer standardizes the workspace, policy boundary, human approval, and evidence trail while the agent surface keeps evolving."
+        body="Give people an isolated cloud computer for the agent that fits their work. As tools change, the company rules, approval process, and audit trail stay consistent."
         step={productSteps[0]}
         primaryHref="#agent-surfaces"
         primaryText="Explore agent surfaces"
@@ -1252,9 +1252,9 @@ function SecuritySubpage() {
   return (
     <>
       <SubpageHero
-        eyebrow="Security by separation"
-        title={<>Let any agent move fast. <span>Keep authority outside the app.</span></>}
-        body="ONEComputer owns the business workflow and runtime boundary. OpenVTC owns identity, wallet custody, Trust Tasks, and the signed decision. The browser can request approval; it cannot manufacture it."
+        eyebrow="Keep consequential decisions human"
+        title={<>Let agents move quickly. <span>Keep the final say with people.</span></>}
+        body="ONEComputer runs the workspace and enforces company rules. OpenVTC keeps identity, signing keys, and important decisions outside the application asking for permission."
         step={productSteps[3]}
         primaryHref={DOCS + "governance/approvals"}
         primaryText="Read the approval model"
@@ -1266,8 +1266,8 @@ function SecuritySubpage() {
       <section className="section subpage-section">
         <div className="shell">
           <Reveal className="section-intro narrow">
-            <p className="eyebrow">Evidence in the product</p>
-            <h2>Policy and approval are visible, testable, and separate.</h2>
+            <p className="eyebrow">See it in the product</p>
+            <h2>Clear rules, a visible pause, and a decision made elsewhere.</h2>
           </Reveal>
           <ScreenshotGrid steps={[productSteps[2], productSteps[3]]} />
         </div>
@@ -1278,17 +1278,17 @@ function SecuritySubpage() {
 
 function ArchitectureSubpage() {
   const layers = [
-    ["Agent runtime", "Claude, NanoClaw, OpenClaw, Codex, Hermes Agent, or another agent works inside an isolated computer."],
-    ["ONEComputer control plane", "The business layer owns users, policy, sandbox lifecycle, gateway holds, and evidence views."],
-    ["OpenVTC trust plane", "Verified identity, Trust Tasks, external wallet custody, signed decisions, expiry, and replay protection."],
+    ["The employee workspace", "Claude, NanoClaw, OpenClaw, Codex, Hermes Agent, or another agent works inside an isolated cloud computer."],
+    ["ONEComputer", "The workplace application manages people, company rules, workspace lifecycle, paused requests, and a clear record of what happened."],
+    ["OpenVTC", "The independent trust layer verifies identity, carries secure requests, keeps signing keys in a separate wallet, and protects decisions from reuse."],
   ];
 
   return (
     <>
       <SubpageHero
         eyebrow="Architecture"
-        title={<>A thin business layer over an <span>open trust plane.</span></>}
-        body="ONEComputer is the enterprise control and enforcement edge. OpenVTC is the independent trust layer underneath. The boundary is explicit so the business app can move quickly without becoming its own root of trust."
+        title={<>A workplace for AI, built on an <span>independent trust layer.</span></>}
+        body="ONEComputer handles the everyday work of people, policy, and cloud computers. OpenVTC handles identity and signed human decisions. Keeping those responsibilities separate makes the system easier to understand and harder to spoof."
         step={productSteps[1]}
         primaryHref={DOCS + "architecture/"}
         primaryText="Read the architecture docs"
@@ -1298,8 +1298,8 @@ function ArchitectureSubpage() {
       <section className="section subpage-section">
         <div className="shell">
           <Reveal className="section-intro narrow">
-            <p className="eyebrow">Three layers, one operating model</p>
-            <h2>Work in the computer. Govern in the control plane. Prove in the trust plane.</h2>
+            <p className="eyebrow">Three parts with clear responsibilities</p>
+            <h2>Work in the computer. Apply the rules in ONEComputer. Verify decisions with OpenVTC.</h2>
           </Reveal>
           <div className="architecture-layers">
             {layers.map(([name, text], index) => (
@@ -1320,9 +1320,9 @@ function OpenSourceSubpage() {
   return (
     <>
       <SubpageHero
-        eyebrow="Open source by design"
-        title={<>Enterprise control. <span>Open foundations.</span></>}
-        body="ONEComputer is forked from ONECli and evolves as the business application over OpenVTC. Explore the repositories, understand the runtime boundary, and build the governed path with us."
+        eyebrow="Open source, end to end"
+        title={<>See how it works. <span>Run it in your own cloud.</span></>}
+        body="ONEComputer began as a fork of ONECli and is being built in the open on top of OpenVTC. Explore the repositories, trace an approval from workspace to wallet, and help shape what comes next."
         step={productSteps[1]}
         primaryHref={GITHUB}
         primaryText="Explore GitHub"
@@ -1333,7 +1333,7 @@ function OpenSourceSubpage() {
       <section className="section subpage-section">
         <div className="shell">
           <div className="resource-banner">
-            <div><p className="eyebrow">Build with the source</p><h2>Fork the app. Keep the trust boundary explicit.</h2></div>
+            <div><p className="eyebrow">Build with the source</p><h2>Adapt the workplace without weakening the approval path.</h2></div>
             <div className="cta-actions resource-actions">
               <motion.a className="button button-brand" href={GITHUB} target="_blank" rel="noreferrer" whileHover={{ y: -2 }}>View ONEComputer <ArrowUpRight size={14} /></motion.a>
               <motion.a className="button button-quiet" href={DOCS + "reference/repository-map"} whileHover={{ y: -2 }}>Repository map <ArrowRight size={14} /></motion.a>
@@ -1350,8 +1350,8 @@ function GettingStartedSubpage() {
     <>
       <SubpageHero
         eyebrow="Getting started"
-        title={<>From first install to your first <span>governed workspace.</span></>}
-        body="The open-source setup path gets a contributor from a clean machine to the local web/API, Rust gateway, PostgreSQL, and documentation in a few commands."
+        title={<>From a clean machine to your first <span>safe workspace.</span></>}
+        body="The open-source installer sets up the portal, gateway, database, and documentation locally so you can understand the complete flow before deploying it to the cloud."
         step={productSteps[0]}
         primaryHref={DOCS + "getting-started/installation"}
         primaryText="Open installation guide"
@@ -1363,18 +1363,18 @@ function GettingStartedSubpage() {
           <div className="install-layout">
             <Reveal className="install-card">
               <p className="eyebrow">One-line install</p>
-              <h2>Start with the OSS path.</h2>
+              <h2>Start locally and see every part.</h2>
               <pre><code>{"curl -fsSL https://raw.githubusercontent.com/ONE-Computer/onecomputer/main/scripts/install.sh | sh"}</code></pre>
-              <p>Review the script first for sensitive environments. It is designed to be rerunnable, preserves existing `.env` and Docker volumes, and never uploads credentials.</p>
+              <p>Review the script first in sensitive environments. You can run it again safely: it keeps your existing `.env` file and Docker volumes, and it does not upload credentials.</p>
               <a className="inline-link" href={DOCS + "getting-started/installation"}>See prerequisites and options <ArrowRight size={14} /></a>
             </Reveal>
             <Reveal className="install-checklist" delay={0.12}>
               <p className="eyebrow">What happens next</p>
               {[
-                "Clone or reuse the ONEComputer checkout",
-                "Install locked dependencies and generate Prisma",
-                "Start PostgreSQL and apply migrations",
-                "Run the portal and Rust gateway locally",
+                "Download or reuse the ONEComputer source",
+                "Install the exact dependencies used by the project",
+                "Start PostgreSQL and prepare the database",
+                "Run the portal and policy gateway on your machine",
               ].map((item) => <span key={item}><Check size={15} /> {item}</span>)}
             </Reveal>
           </div>
@@ -1387,18 +1387,18 @@ function GettingStartedSubpage() {
 
 function OpenVtcSubpage() {
   const concepts = [
-    ["Identify the actor", "Resolve a verifiable identity for the employee, manager, wallet, service, or agent—not merely an account name."],
-    ["Name the exact task", "A Trust Task binds the decision to one action, payload digest, policy context, approver, and expiry."],
-    ["Keep the key elsewhere", "The VTA wallet holds the manager's private key on a separate device, outside the requesting application."],
-    ["Return portable proof", "A signed approval or denial can be independently verified and cannot be silently changed by ONEComputer."],
+    ["Know who is making the decision", "OpenVTC connects the employee, manager, service, or agent to an identity that can be verified—not just a name shown on a screen."],
+    ["Describe exactly what needs approval", "The request includes the action, relevant data, company rule, person responsible, and a short expiry time."],
+    ["Keep the person's key somewhere else", "The manager's private signing key stays in a VTA wallet on a separate device, outside ONEComputer."],
+    ["Return a decision anyone can check", "The signed approval or denial is tied to that request. ONEComputer can verify it, but cannot quietly change or reuse it."],
   ];
 
   return (
     <>
       <SubpageHero
-        eyebrow="The trust foundation for accountable agents"
-        title={<>Agents can act. <span>OpenVTC proves who authorized what.</span></>}
-        body="AI agents read files, use tools, and trigger real actions. ONEComputer limits where that work can happen. OpenVTC provides the independent identity, key custody, secure messaging, and signed evidence needed to trust consequential decisions."
+        eyebrow="Why ONEComputer is built on OpenVTC"
+        title={<>Agents can act. <span>People decide what matters.</span></>}
+        body="AI agents become more useful when they can read files, use tools, and take action. ONEComputer limits where that work can happen. OpenVTC gives important decisions a verifiable human source, separate from the application requesting permission."
         visual={<TrustFoundationVisual />}
         primaryHref="#openvtc-foundation"
         primaryText="Start with the fundamentals"
@@ -1409,9 +1409,9 @@ function OpenVtcSubpage() {
       <section className="section subpage-section openvtc-mechanics">
         <div className="shell">
           <Reveal className="section-intro">
-            <p className="eyebrow">From request to verifiable release</p>
-            <h2>Four foundations. Five steps. One verifiable decision.</h2>
-            <p>The portal may display the request. The gateway may hold the work. Authority becomes real only when the external trust path returns a valid response for that exact action.</p>
+            <p className="eyebrow">From a request to a decision you can trust</p>
+            <h2>OpenVTC answers four practical questions.</h2>
+            <p>Who is deciding? What exactly are they deciding? Where is their key kept? And how can the result be checked later? ONEComputer waits until OpenVTC can answer all four.</p>
           </Reveal>
           <div className="concept-grid">
             {concepts.map(([name, text], index) => (
@@ -1421,13 +1421,13 @@ function OpenVtcSubpage() {
             ))}
           </div>
           <div className="trust-explainer-flow">
-            {["Agent requests", "Gateway freezes", "VTI delivers", "Wallet decides", "Proof releases once"].map((label, index) => (
+            {["Agent asks", "ONEComputer pauses", "VTI delivers", "Manager decides", "Decision releases once"].map((label, index) => (
               <motion.div className="trust-explainer-node" key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: index * 0.08 }}>
-                <b>{label}</b><small>{index === 0 ? "consequential action" : index === 1 ? "payload + digest" : index === 2 ? "encrypted Trust Task" : index === 3 ? "external human key" : "verify + prevent replay"}</small>
+                <b>{label}</b><small>{index === 0 ? "a sensitive action" : index === 1 ? "the exact request" : index === 2 ? "through a secure channel" : index === 3 ? "in a separate wallet" : "verified and not reused"}</small>
               </motion.div>
             ))}
           </div>
-          <div className="mechanics-rule"><LockKeyhole size={17} /><span><b>The key rule</b> The system asking for approval cannot also be the system that creates the authoritative approval.</span></div>
+          <div className="mechanics-rule"><LockKeyhole size={17} /><span><b>The key rule</b> The application asking for permission cannot also create the decision that grants it.</span></div>
         </div>
       </section>
       <EnterpriseJourney id="openvtc-journey" />
@@ -1435,8 +1435,8 @@ function OpenVtcSubpage() {
       <section className="section subpage-section">
         <div className="shell">
           <Reveal className="section-intro narrow">
-            <p className="eyebrow">Visible in the product</p>
-            <h2>The portal shows the hold. The wallet owns the decision.</h2>
+            <p className="eyebrow">See the separation for yourself</p>
+            <h2>ONEComputer shows why work paused. The wallet decides what happens next.</h2>
           </Reveal>
           <ScreenshotGrid steps={[productSteps[3], productSteps[1]]} />
           <div className="openvtc-doc-links">

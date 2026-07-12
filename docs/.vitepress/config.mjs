@@ -4,7 +4,7 @@ export default defineConfig({
   title: "ONEComputer Docs",
   titleTemplate: "%s · ONEComputer",
   description:
-    "Open-source documentation for secure cloud Claude workspaces, policy, and OpenVTC approvals.",
+    "Documentation for isolated AI workspaces, company policy, and human approval through OpenVTC.",
   base: "/docs/",
   cleanUrls: true,
   appearance: true,
@@ -68,6 +68,7 @@ export default defineConfig({
             { text: "Repository and runtime map", link: "/reference/repository-map" },
             { text: "Troubleshooting", link: "/reference/troubleshooting" },
             { text: "Current status", link: "/reference/status" },
+            { text: "Writing and messaging", link: "/reference/content-style" },
           ],
         },
       ],
@@ -83,7 +84,7 @@ export default defineConfig({
     },
     docFooter: { prev: "Previous", next: "Next" },
     footer: {
-      message: "Open-source governed AI computers · forked from ONECli",
+      message: "Open-source workspaces for safer agentic work · built from ONECli",
       copyright: "Released under the Apache-2.0 license",
     },
   },
